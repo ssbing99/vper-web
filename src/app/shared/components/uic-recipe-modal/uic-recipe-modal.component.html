@@ -1,0 +1,22 @@
+<div id="recipeDetails">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-end">
+        <ion-button fill="clear" color="dark" (click)="dismiss()">
+          <span aria-hidden="true" style="font-size: 20px;">&times;</span>
+        </ion-button>
+      </div>
+      <div class="modal-body">
+        <div class="row clearfix">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <img src="{{ dish?.image }}" class="img-fluid" alt="Image goes here" />
+          </div>
+          <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="modaltitle">{{ dish?.name }}</div>
+            <p class="modalcontent">{{ dish?.grocery }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

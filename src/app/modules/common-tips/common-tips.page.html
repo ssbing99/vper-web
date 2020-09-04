@@ -1,0 +1,40 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+
+      <div class="row clearfix">
+        <div class="col-12">
+          <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "common_tips.title" | translate }}</div>
+          <p class="dash-content">{{ "common_tips.p1" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p2" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p3" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p4" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p5" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p6" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p7" | translate }}</p>
+          <p class="dash-content">{{ "common_tips.p8" | translate }}</p>
+        </div>
+
+        <div class="col-12">
+          <table class="table mt-3">
+            <thead>
+            <tr>
+              <th scope="col">{{ "common_tips.p9" | translate }}</th>
+              <th scope="col">{{ "common_tips.p10" | translate }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tip of tips">
+              <th scope="row">{{ tip?.startdate }} - {{ tip?.endDate }}</th>
+              <td>{{ tip?.ammount}}Nok</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+

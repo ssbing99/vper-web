@@ -1,0 +1,76 @@
+<header>
+  <!--most top info -->
+  <!-- End most top info -->
+  <ng-container *ngIf="!isLogin; else isLoggedTpl">
+    <nav id="header-root" class="navbar navbar-expand-lg navbar-light top-navbar" data-toggle="sticky-onscroll">
+      <div class="container">
+        <a class="navbar-brand" href="javascript:void(0)" tappable (click)="goToHome()"><img src="assets/images/logo.png" class="img-fluid" alt="YperKokk"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav float">
+            <li class="nav-item"><a class="nav-link active">Kokkene</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Om YperKokk</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Slikfungererdet</a></li>
+            <!-- <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Slikfungererdet</a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">HTML-5</a>
+                    <a class="dropdown-item" href="#">CSS-3</a>
+                    <a class="dropdown-item" href="#">Bootstrap-4</a>
+                  </div>
+                </li> -->
+            <li class="nav-item"><a class="nav-link" href="#">Småtteri til kjøkkene</a></li>
+            <!-- <li class="nav-item"><a class="btn btn-primary" id="btnLogin" data-toggle="modal" data-target="#loginModal"
+                href="#">Logg In</a></li> -->
+            <li class="nav-item"><a class="btn btn-primary" id="btnLogin"
+                                    href="javascript:void(0)" (click)="openLoginModal()">Logg In</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </ng-container>
+</header>
+
+<ng-template #isLoggedTpl>
+  <nav id="header-root" class="navbar navbar-expand-lg navbar-light top-navbar" data-toggle="sticky-onscroll">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" class="img-fluid" alt="YperKokk"/></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav float">
+          <li class="nav-item"><a class="nav-link active" href="javascript:void(0)" (click)="goTo('/search-chef')">Kokkene</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Om YperKokk</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Slikfungererdet</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Småtteri til kjøkkene</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                   width="40" height="40" class="rounded-circle"> {{ firstName }}
+            </a>
+            <div *ngIf="!isChef" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="javascript:void(0)" (click)="goTo('dashboard', 0)">Rediger profil</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="goTo('dashboard', 1)">Mine bestillinger</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="goTo('dashboard', 2)">Innstillinger</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Logg ut</a>
+            </div>
+
+            <div *ngIf="isChef" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="javascript:void(0)">Manage Profile</a>
+              <a class="dropdown-item" href="javascript:void(0)">Chef's Choice</a>
+              <a class="dropdown-item" href="javascript:void(0)">View Reviews</a>
+              <a class="dropdown-item" href="javascript:void(0)">Settings</a>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</ng-template>

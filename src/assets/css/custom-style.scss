@@ -1,0 +1,15 @@
+.loading-modal {
+  .loading-wrapper {
+    z-index: 9999 !important;
+  }
+}
+
+.login-modal {
+  .modal-wrapper {
+    background: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    top: 0px;
+    position: absolute;
+  }
+}

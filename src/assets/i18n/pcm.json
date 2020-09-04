@@ -1,0 +1,99 @@
+{
+  "fname":"Navn",
+  "lname":"Etternavn",
+  "email":"E-post",
+  "password": "Passord",
+  "phoneno": "Telefonnummer",
+  "address": "Adresse",
+  "referral.code": "Henvisningskode",
+  "confirm.password": "Bekreft Passord",
+  "create.user": "Lag En Bruker",
+  "signup.chef": "Kokker",
+  "signup.user.title": "Registrer deg som Lag En Bruker",
+  "signup.chef.title": "Registrer deg som Kokker",
+  "signup.desc": "You are 30 seconds away from earning your own money!",
+  "login": "Logg In",
+  "error.fname.empty": "Please Enter First Name",
+  "error.password.empty": "Please Enter Password",
+  "error.email.invalid": "Invalid Email Address",
+  "error.email.empty": "Please Enter Email Address",
+  "error.phone.empty": "Please Enter Phone number",
+  "error.confirm.password.empty": "Please Enter Confirm Password",
+  "error.confirm.password.match": "Confirm Password is not match with Password",
+  "error.address.empty": "Please Enter Address",
+  "error.address.complete": "Please Complete Address",
+  "error": "Something wrong please try after sometimes",
+  "start.chat": "Start Chat",
+  "order": "Bestill",
+  "hire_chef": {
+    "step":"Steg",
+    "of": "av",
+    "step1": {
+      "food_menu":"Matkasse meny",
+      "other":"Annen"
+    },
+    "step2": {
+      "title":"Hvilke retter har du valgt fra menyen.",
+      "second_step_title2":"Skriv Inn Matkasse Detalier",
+      "third_title": "Skriv Inn Andre Detaljer",
+      "second_text":"Hvem er abonnnenten din? feks. Godt levert, nettmat.no. kolonial.no etc.",
+      "first_text":"Hvlike retter eller matkasse har du valgt for uken? feks hverdagskassen, lasagne etc"
+    },
+    "step3": {
+      "title":"vor mange middager vill du ha?",
+      "days":"dager"
+    },
+    "step4":{
+      "title":"Hvor mange skal spise dagen Yperkokken ankommer?"
+    },
+    "step5":{
+      "title":"Hvor mange a spise i totalt antall dager"
+    },
+    "step6":{
+      "title":"Allergier og annet?",
+      "text":"Skriv her"
+    },
+    "step7":{
+      "title":"Din adresse og tlf nr",
+      "address":"adresse",
+      "phone":"telefonnummer",
+      "post_code":"postnummer",
+      "county":"velg fylke",
+      "city":"velg by"
+    },
+    "step8": {
+      "title": "Nar skal kokken ankomme?",
+      "tl_amount":"Totalbelop"
+    },
+    "payment": {
+      "title": "Betaling",
+      "payment_methods": "Betalingsmetode",
+      "new_card": "Nytt kort",
+      "save_card_use": "Lagre kort for fremtidig bruk?",
+      "cancel": "Avbryt",
+      "saved_card": "Betal med lagret kort",
+      "pay": "Betale",
+      "invalid_coupon": "Ugyldig kupongkode"
+    },
+    "sus_msg_checf_book": "Kokk bestilt vellykket"
+  },
+  "booking": {
+    "current": "Gjeldende Bestilling",
+    "past": "Tidligere Bestilling",
+    "name": "Navn",
+    "show_details": "Vis Detaljer"
+  },
+  "common_tips":{
+    "title":"Felles Tipsen",
+    "p1":"Crowd virksomhet handler om deling.",
+    "p2":"Dette er en oversikt over din Felles tips.",
+    "p3":"Av alle oppdragene som kokker fullfører, blir The Common Tips (eller Felles Tipsen) generert og akkumuleres i 30 dager, alle kokkene deler 95% etter 30 dager.",
+    "p4":"Dette betyr at når en kokk gjør en jobb, øker de felles tipsene. (Noen få eksempler: ",
+    "p5":"#1. 1 person betaler 300kr = 200kr til kokken - 100kr til FT.",
+    "p6":"#2. 10 personer betaler 2000kr = 1800kr til kokken - 200kr til FT.",
+    "p7":"#3. 15 personer betaler 2700kr = 2400kr til kokken - 300kr til FT.)",
+    "p8":"I Felles tipsen vil det også være andre tilknyttede avtaler med Culina og div food leverandører som også øker inntektene for Felles tipsen. Yper-virksomheten tjener kun 5-2,5% av Felles Tipsen, det betyr at 95-97,5% returneres til kokker hver måned.",
+    "p9":"Periode",
+    "p10":"Total"
+  }
+}

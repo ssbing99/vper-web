@@ -1,0 +1,61 @@
+<div id="chatModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Past Chat</h5>
+        <button type="button" class="close" (click)="dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p0">
+        <div class="row chat-window" id="chat_window_1">
+          <div class="panel panel-default w-100">
+            <div class="panel-body msg_container_base" style="min-height: 280px;">
+              <div *ngFor="let chat of chatData" class="msg_container {{ chat?.user_id_from === user?.id ? 'base_sent' : 'base_receive' }}">
+                <div class="row" *ngIf="chat?.user_id_from === user?.id">
+                  <div class="col-10">
+                    <div class="messages msg_sent">
+                      <p>{{ chat?.message }}</p>
+                      <time datetime="2009-11-13T20:00">{{ chat?.timestamp | date: 'yyyy-MM-dd HH:mm' }}</time>
+                    </div>
+                  </div>
+                  <div class="col-2 avatar">
+                    <img *ngIf="fromUserImage !== ''" src="{{ fromUserImage }}" class="img-responsive">
+                    <img *ngIf="fromUserImage === ''" src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                  </div>
+                </div>
+
+                <div class="row" *ngIf="chat?.user_id_from != user?.id">
+                  <div class="row msg_container">
+                    <div class="col-2 avatar">
+                      <img *ngIf="toUserImage !== ''" src="{{ toUserImage }}" class=" img-responsive ">
+                      <img *ngIf="toUserImage === ''" src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
+                    </div>
+                    <div class="col-10">
+                      <div class="messages msg_receive">
+                        <p>{{ chat?.message }}</p>
+                        <time datetime="2009-11-13T20:00">{{ chat?.timestamp | date: 'yyyy-MM-dd HH:mm' }}</time>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="loading">
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%; height: 30px;" class="mb-2"></ion-skeleton-text>
+              </div>
+            </div>
+            <div class="panel-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+{
+  "name": "Yper",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

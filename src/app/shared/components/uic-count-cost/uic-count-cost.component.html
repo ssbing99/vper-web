@@ -1,0 +1,23 @@
+<section class="white-bg clearfix">
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <h1>Våre matkasser<span>Sjekk ut hva Adam byr på fremover og sammenlign alle matkassene våre. Vi håper du finner noe du liker.</span></h1>
+      </div>
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="float-right mt-30">
+          <!-- <select class="form-control-lg mr-10 bg-white" (change)="changeDay()" [(ngModel)]="daySelected">
+            <option value="">Antall middager</option>
+            <option value="{{no}}" *ngFor="let no of totalDays">{{ no }} days</option>
+          </select> -->
+          <select class="form-control-lg bg-white" (change)="changePerson()" [(ngModel)]="personSelected">
+            <option value="">Antall personer å spise</option>
+            <option value="{{ no }}"  *ngFor="let no of totalPersons">{{ no }} Person</option>
+          </select>
+          <div class="calctext" *ngIf="amount">{{ amount }}NoK</div>
+          <div class="calctext py-0" *ngIf="!amount" style="width: 10%; height: 30px; vertical-align: text-bottom;"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

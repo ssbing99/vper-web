@@ -1,0 +1,468 @@
+<ion-content>
+  <section class="ptb-80">
+    <div class="container overflow-hidden">
+      <div class="row clearfix">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h1>Bestillingsprosess</h1>
+        </div>
+      </div>
+      <!--multisteps-form-->
+      <div class="multisteps-form">
+        <!--progress bar-->
+        <div class="row">
+          <div class="col-12 col-lg-12 ml-auto mr-auto mb-4">
+            <div class="multisteps-form__progress">
+              <button class="multisteps-form__progress-btn js-active" type="button" title="steg-1">{{ 'hire_chef.step' | translate }} 1
+              </button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-2">{{ 'hire_chef.step' | translate }} 2
+              </button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-3">{{ 'hire_chef.step' | translate }} 3
+              </button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-4">{{ 'hire_chef.step' | translate }} 4
+              </button>
+              <button *ngIf="totalSteps === 9" class="multisteps-form__progress-btn" type="button" title="steg-5">{{ 'hire_chef.step' | translate }} 5
+              </button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-6">{{ 'hire_chef.step' | translate }} {{ totalSteps === 9 ? 6 : 5 }}</button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-7">{{ 'hire_chef.step' | translate }} {{ totalSteps === 9 ? 7 : 6 }}</button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-8">{{ 'hire_chef.step' | translate }} {{ totalSteps === 9 ? 8 : 7 }}</button>
+              <button class="multisteps-form__progress-btn" type="button" title="steg-9">{{ 'hire_chef.step' | translate }} {{ totalSteps === 9 ? 9 : 8 }}</button>
+            </div>
+          </div>
+        </div>
+        <!--form panels-->
+        <div class="row">
+          <div class="col-12 col-lg-12 m-auto">
+            <div class="multisteps-form__form">
+              <!--single form panel-->
+              <div class="multisteps-form__panel js-active" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>Hva slags meny valgte du denne uken?</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="YperCookMenu" name="Menu" class="custom-control-input"
+                               (change)="selectStep1(1)">
+                        <label class="custom-control-label" for="YperCookMenu">Yper Cook Menu</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="MatkasseMeny" name="Menu" class="custom-control-input" value="2"
+                               (change)="selectStep1(2)">
+                        <label class="custom-control-label"
+                               for="MatkasseMeny">{{ 'hire_chef.step1.food_menu' | translate }}</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="Annen" name="Menu" class="custom-control-input"
+                               (change)="selectStep1(3)">
+                        <label class="custom-control-label"
+                               for="Annen">{{ 'hire_chef.step1.other' | translate }}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" (click)="goTo(2)">
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <div *ngIf="index === 2 && bookingParams.booking_type === 1">
+                    <legend>{{ 'hire_chef.step2.title' | translate }}</legend>
+                    <div class="form-row mtb-15">
+                      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" *ngFor="let dish of chefDetails?.dish">
+                        <div class="custom-control custom-checkbox mtb10">
+                          <input type="checkbox" id="dish_{{dish?.id}}" name="ChooseDish" class="custom-control-input"
+                                 [checked]="getDishChecked(dish.id)" (change)="selectDish(dish?.id)">
+                          <label class="custom-control-label" for="dish_{{dish?.id}}">{{ dish?.name }}</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="index === 2 && bookingParams.booking_type === 2">
+                    <legend>{{ 'hire_chef.step2.second_step_title2' | translate }}</legend>
+                    <div class="form-row mtb-15">
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                        <textarea rows="3" class="form-control" name="matkasse1"
+                                  placeholder="{{ 'hire_chef.step2.first_text' | translate }}"
+                                  [(ngModel)]="bookingParams.foodbox_menu_company"></textarea>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                        <textarea rows="3" class="form-control" name="matkasse2"
+                                  placeholder="{{ 'hire_chef.step2.second_text' | translate }}"
+                                  [(ngModel)]="bookingParams.foodbox_menu"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="index === 2 && bookingParams.booking_type === 3">
+                    <legend>{{ 'hire_chef.step2.third_title' | translate }}</legend>
+                    <div class="form-row mtb-15">
+                      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group">
+                        <textarea rows="3" class="form-control" name="EnterDetails"
+                                  placeholder="Please enter the details here..."
+                                  [(ngModel)]="bookingParams.other"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-secondary js-btn-prev" type="button" title="Prev" (click)="goTo(1)">Prev
+                    </button>
+                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" (click)="goTo(3)">
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+
+                  <legend>{{ 'hire_chef.step3.title' | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"></div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <select class="form-control" [(ngModel)]="bookingParams.total_days">
+                        <option value="0">Select {{ 'hire_chef.step3.days' | translate }}</option>
+                        <option *ngFor="let no of totalDays"
+                                value="{{ no }}">{{ no }} {{ 'hire_chef.step3.days' | translate }}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="button-row d-flex mt-4 col-12">
+                      <button class="btn btn-secondary js-btn-prev" type="button" title="Prev" (click)="goTo(2)">Prev
+                      </button>
+                      <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" (click)="goTo(4)">
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>{{ "hire_chef.step4.title" | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"></div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <select class="form-control" [(ngModel)]="bookingParams.total_person[0]">
+                        <option value="0">Select Person</option>
+                        <option *ngFor="let person of totalPersons" value="{{ person }}">{{ person }} Person</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="button-row d-flex mt-4 col-12">
+                      <button class="btn btn-secondary js-btn-prev" type="button" title="Prev" (click)="goTo(3)">Prev
+                      </button>
+                      <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" (click)="goTo(5)">
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn" *ngIf="totalSteps === 9">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>{{ 'hire_chef.step5.title' | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
+                         *ngIf="bookingParams.total_days >= 2">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">Day 2</label>
+                        </div>
+                        <select class="form-control" id="ForDager2CookMenu" name="ForDager2CookMenu"
+                                [(ngModel)]="bookingParams.total_person[1]">
+                          <option value="0">Select Person</option>
+                          <option *ngFor="let person of totalPersons" value="{{ person }}">{{ person }} Person</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
+                         *ngIf="bookingParams.total_days >= 3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">Day 3</label>
+                        </div>
+                        <select class="form-control" id="ForDager3CookMenu" name="ForDager3CookMenu"
+                                [(ngModel)]="bookingParams.total_person[2]">
+                          <option value="0">Select Person</option>
+                          <option *ngFor="let person of totalPersons" value="{{ person }}">{{ person }} Person</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
+                         *ngIf="bookingParams.total_days >= 4">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">Day 4</label>
+                        </div>
+                        <select class="form-control" id="ForDager4CookMenu" name="ForDager4CookMenu"
+                                [(ngModel)]="bookingParams.total_person[3]">
+                          <option value="0">Select Person</option>
+                          <option *ngFor="let person of totalPersons" value="{{ person }}">{{ person }} Person</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group"
+                         *ngIf="bookingParams.total_days >= 5">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">Day 5</label>
+                        </div>
+                        <select class="form-control" id="ForDager5CookMenu" name="ForDager5CookMenu"
+                                [(ngModel)]="bookingParams.total_person[4]">
+                          <option value="0">Select Person</option>
+                          <option *ngFor="let person of totalPersons" value="{{ person }}">{{ person }} Person</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row mtb-15" *ngIf="bookingParams.total_days == 6">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">Day 6</label>
+                        </div>
+                        <select class="form-control" id="ForDager6CookMenu" name="ForDager6CookMenu"
+                                [(ngModel)]="bookingParams.total_person[5]">
+                          <option value="0">Select Person</option>
+                          <option *ngFor="let person of totalPersons" value="{{ person }}">{{ person }} Person</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-secondary js-btn-prev" type="button" title="Prev" (click)="goTo(4)">Prev
+                    </button>
+                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next" (click)="goTo(6)">
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>{{ 'hire_chef.step6.title' | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group">
+                      <textarea rows="3" class="form-control" id="CookerSkrivHer" name="CookerSkrivHer"
+                                placeholder="{{ 'hire_chef.step6.text' | translate }}"
+                                [(ngModel)]="bookingParams.alergies"></textarea>
+                    </div>
+                  </div>
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-secondary js-btn-prev" type="button" title="Prev"
+                            (click)="goTo(getIndex(5))">Prev
+                    </button>
+                    <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next"
+                            (click)="goTo(getIndex(7))">Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>{{ 'hire_chef.step7.title' | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 form-group">
+                      <input type="text" class="form-control" name="adresse" id="adresse"
+                             placeholder="{{ 'hire_chef.step7.address' | translate }}"
+                             [(ngModel)]="bookingParams.address.address"/>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 form-group">
+                      <input type="number" class="form-control" name="telefonnummer" id="telefonnumer"
+                             placeholder="{{ 'hire_chef.step7.phone' | translate }}"
+                             [(ngModel)]="bookingParams.address.phone"/>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 form-group">
+                      <input type="text" class="form-control" name="postnummer" id="postnummer"
+                             placeholder="{{ 'hire_chef.step7.post_code' | translate }}"
+                             [(ngModel)]="bookingParams.address.postal_code"/>
+                    </div>
+                  </div>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 form-group">
+                      <select class="form-control" id="country" name="Country"
+                              [(ngModel)]="bookingParams.address.country">
+                        <option value="">Select Country</option>
+                        <option value="164">Norway</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 form-group">
+                      <select class="form-control" id="county" name="county" [(ngModel)]="bookingParams.address.state"
+                              (change)="selectCounty()">
+                        <option value="0">{{ 'hire_chef.step7.county' | translate }}</option>
+                        <option *ngFor="let state of states" value="{{ state?.id }}">{{ state?.name }}</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 form-group">
+                      <select class="form-control" id="city" name="city" [(ngModel)]="bookingParams.address.city">
+                        <option value="0">{{ 'hire_chef.step7.city' | translate }}</option>
+                        <option *ngFor="let city of cities" value="{{ city?.id }}">{{ city?.name }}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="button-row d-flex mt-4 col-12">
+                      <button class="btn btn-secondary js-btn-prev" type="button" title="Prev"
+                              (click)="goTo(getIndex(6))">Prev
+                      </button>
+                      <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next"
+                              (click)="goTo(getIndex(8))">Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>{{ 'hire_chef.step8.title' | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <input type="text" id="date" class="form-control" placeholder="Date">
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <input type="text" id="time" class="form-control" placeholder="Time">
+                    </div>
+                  </div>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <div class="price-label">{{ 'hire_chef.step8.tl_amount' | translate }} :<span>{{ displayAmount }}
+                        Nok</span></div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-group">
+                      <input type="text" id="CouponCode" class="form-control" placeholder="Coupon code"
+                             (blur)="validateCoupon()" [(ngModel)]="couponCode">
+                      <span *ngIf="bookingParams.couponData">Coupon Amount : {{ bookingParams.couponData?.amount_off }}
+                        NoK</span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="button-row d-flex mt-4 col-12">
+                      <button class="btn btn-secondary js-btn-prev" type="button" title="Prev"
+                              (click)="goTo(getIndex(7))">Prev
+                      </button>
+                      <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next"
+                              (click)="goTo(getIndex(9))">Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--single form panel-->
+              <div class="multisteps-form__panel" data-animation="fadeIn">
+                <h3
+                  class="multisteps-form__title">{{ 'hire_chef.step' | translate }} {{ index }} {{ 'hire_chef.of' | translate }} {{ totalSteps }}</h3>
+                <div class="multisteps-form__content">
+                  <legend>{{ 'hire_chef.payment.title' | translate }}</legend>
+                  <div class="form-row mtb-15">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <p>{{ 'hire_chef.payment.payment_methods' | translate }}</p>
+                      <div class="custom-control custom-radio">
+                        <div class="row">
+                          <div class="col-12">
+                            <input type="radio" name="oldCard" id="oldCard" class="custom-control-input"
+                                   (change)="useOldCard()" [checked]="oldCard">
+                            <label class="custom-control-label"
+                                   for="oldCard">{{ 'hire_chef.payment.saved_card' | translate }} <span
+                              *ngIf="bookingInfo?.cardInfo"> ({{ bookingInfo?.cardInfo?.card_last4_degit }})</span></label>
+                          </div>
+                          <div class="col-12">
+                            <input type="radio" name="newCard" id="newCard" class="custom-control-input"
+                                   (change)="showPayment()" [checked]="useNewCard">
+                            <label class="custom-control-label"
+                                   for="newCard">{{ 'hire_chef.payment.new_card' | translate }}</label>
+                          </div>
+                        </div>
+
+                        <div class="mtb-15">
+                          <app-stripe-element
+                            *ngIf="newCard"
+                            [secretClient]="secretClient"
+                            [totalAmount]="displayAmount"
+                            [callback]="paymentCallback"
+                            [requireActionCallback]="requireActionCallback"
+                            [hidePostalCode]="true"></app-stripe-element>
+
+                          <div class="form-row" id="ifYes" [ngClass]="{'visibility-hidden': !newCard }">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 form-group">
+                              <div class="custom-control custom-checkbox mtb10">
+                                <input type="checkbox" name="lagrekort" id="Kort" class="custom-control-input" (change)="changeSaveCardOption()"
+                                       [checked]="savedCard"/>
+                                <label class="custom-control-label"
+                                       for="Kort">{{ 'hire_chef.payment.save_card_use' | translate }}</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-secondary js-btn-prev" type="button" title="Prev"
+                            (click)="cancelTransaction()">{{ 'hire_chef.payment.cancel' | translate }}</button>
+                    <button class="btn btn-success ml-auto" type="button"
+                            title="Send" (click)="makePayment()">{{ 'hire_chef.payment.pay' | translate }} {{displayAmount}}Nok
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</ion-content>

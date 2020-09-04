@@ -1,0 +1,138 @@
+<ion-content>
+  <app-count-cost></app-count-cost>
+
+  <section>
+    <div class="container" *ngIf="chefDetails">
+      <div class="row clearfix">
+        <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+          <div class="leftAside">
+            <div class="profilepic clearfix">
+              <img *ngIf="chefDetails?.profile?.user_image !== ''" src="{{ chefDetails?.profile?.user_image }}" alt="Image goes here" />
+              <img *ngIf="chefDetails?.profile?.user_image == ''" class="m-auto" src="assets/images/avatar-3.png" alt="Profile Pic" />
+            </div>
+            <div class="ratingbox">
+              <div class="ratings">Ratings
+                <app-star-ratings [rating]="rating"></app-star-ratings></div>
+              <div class="ratings">Reviews <span class="pull-right">{{ chefDetails?.review?.length }} Reviews</span></div>
+            </div>
+            <a href="javascript:void(0)" class="btn btn-primary btn-lg btn-block" (click)="showChat()"><i class="fa fa-comments-o mr10"></i> {{ 'start.chat' | translate }}</a>
+          </div>
+        </div>
+        <div class="col-12 col-sm-8 col-md-9 col-lg-9 col-xl-9">
+          <div class="txthead">{{ chefDetails?.profile?.fname }} {{ chefDetails?.profile?.lname }}<span>{{ chefDetails?.profile?.city }}</span></div>
+          <p class="chefdetails clearfix">{{ chefDetails?.profile?.about_me }}</p>
+          <div class="title">Chef's Choice</div>
+          <div class="flexcontainer row">
+            <ion-label *ngIf="chefDetails?.dish.length === 0">There is no dish added yet.</ion-label>
+            <div class="imgbox col col-sm-3 px-0" *ngFor="let item of chefDetails?.dish | slice:0:4; let i = index">
+              <a href="javascript:void(0)" (click)="showDishDetails(item)">
+                  <img src="{{ item?.image }}" alt="Image goes here" />
+                  <div class="caption">{{ item?.name }}</div>
+              </a>
+            </div>
+          </div>
+          <div class="subhead">Reviews
+            <span class="pull-right">
+              <select class="form-control-sm">
+                <option value="">Toppanmeldelser</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+            </span>
+          </div>
+          <ion-label *ngIf="chefDetails?.review?.length === 0">There is no reviews.</ion-label>
+          <div class="reviewsection clearfix" *ngFor="let review of chefDetails?.review">
+            <div class="reviewtop">
+              <div class="pic">
+                <img src="{{ review?.user_image }}" alt="Image goes here" class="h-100 w-100" />
+              </div>
+              <div class="reviewer">
+                <div class="reviewtext">{{ review?.name }}<span>Reviewed in Norway on {{ review?.created_date }}</span></div>
+                <div class="ratings"><span>
+                  <app-star-ratings [rating]="Num(review.ratings)" [noRight]="true"></app-star-ratings>
+                </span></div>
+              </div>
+            </div>
+            <p class="reviewdetails">{{ review?.review_text }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" *ngIf="!chefDetails">
+      <div class="row clearfix">
+        <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+          <div class="leftAside">
+            <div class="profilepic clearfix">
+              <ion-skeleton-text animated style="width: 100%; height: 200px;"></ion-skeleton-text>
+            </div>
+            <div class="ratingbox">
+              <div class="ratings"><ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text> <span class="pull-right"><ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text></span></div>
+              <div class="ratings"><ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text> <span class="pull-right"><ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text></span></div>
+            </div>
+            <a href="javascript:void(0)" class="btn btn-primary btn-lg btn-block"><ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text></a>
+          </div>
+        </div>
+        <div class="col-12 col-sm-8 col-md-9 col-lg-9 col-xl-9">
+          <div class="txthead"><ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text>
+            <span>
+              <ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text>
+            </span>
+          </div>
+          <p class="chefdetails clearfix">
+            <ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 100%; "></ion-skeleton-text>
+          </p>
+          <div class="title">Chef's Choice</div>
+          <div class="flexcontainer row">
+            <div class="imgbox col px-1">
+              <a href="javascript:void(0)" style="width: 100%;">
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              </a>
+            </div>
+            <div class="imgbox col px-1">
+              <a href="javascript:void(0)" style="width: 100%;">
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              </a>
+            </div>
+            <div class="imgbox col px-1">
+              <a href="javascript:void(0)" style="width: 100%;">
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              </a>
+            </div>
+            <div class="imgbox col px-1">
+              <a href="javascript:void(0)" style="width: 100%;">
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              </a>
+            </div>
+          </div>
+          <div class="subhead">Reviews</div>
+          <div class="reviewsection clearfix">
+            <div class="reviewtop d-flex">
+              <div class="pic">
+                <ion-skeleton-text animated style="width: 100%; height: 40px;"></ion-skeleton-text>
+              </div>
+              <div class="reviewer w-100">
+                <p class="reviewtext"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                  <span><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></span>
+                </p>
+                <p class="ratings"><span><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></span></p>
+              </div>
+            </div>
+            <p class="reviewdetails"><span><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></span>
+              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</ion-content>

@@ -1,0 +1,4 @@
+<span [ngClass]="{'pull-right': !noRight}">
+  <i class="fa fa-star" *ngFor="let i of Arr(rating).fill(1)"></i>
+  <i class="fa fa-star-o" *ngFor="let i of Arr(starNum - rating).fill(1)"></i>
+</span>

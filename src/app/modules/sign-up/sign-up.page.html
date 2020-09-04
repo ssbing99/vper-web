@@ -1,0 +1,250 @@
+<ion-content>
+  <section class="register">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 register-left">
+          <img src="assets/images/chef-cap.png" alt=""/>
+          <h3>Yperkokk</h3>
+          <p>{{ 'signup.desc' | translate }}</p>
+          <div class="text-center"><a class="btn btn-white btn-lg btn-block mb-15"
+                                      id="btnLogin" href="javascript:void(0)"
+                                      (click)="openLoginModal()">{{ 'login' | translate }}</a></div>
+        </div>
+        <div class="col-md-9 register-right">
+          <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                 aria-selected="true">{{ 'create.user' | translate }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                 aria-selected="false">{{ 'signup.chef' | translate }}</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <h3 class="register-heading">{{ 'signup.user.title' | translate }}</h3>
+              <form [formGroup]="userSignupForm" (ngSubmit)="userRegister()">
+                <div class="row register-form">
+                  <div class="col-md-6">
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'fname' | translate }} *"
+                               formControlName="fname">
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'fname')?.errors?.required" class="invalid">{{ 'error.fname.empty' | translate }}</div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'lname' | translate }} *"
+                               formControlName="lname">
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-key"></i>
+                          </span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="{{ 'password' | translate }} *"
+                               formControlName="password">
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'password')?.errors?.required" class="invalid">{{ 'error.password.empty' | translate }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-envelope"></i>
+                          </span>
+                        </div>
+                        <input type="email" class="form-control" placeholder="{{ 'email' | translate }} *"
+                               formControlName="email">
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'email')?.errors?.required" class="invalid">{{ 'error.email.empty' | translate }}</div>
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'email')?.errors?.pattern" class="invalid">{{ 'error.email.invalid' | translate }}</div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-phone"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'phoneno' | translate }} *"
+                               formControlName="phone">
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'phone')?.errors?.required" class="invalid">{{ 'error.phone.empty' | translate }}</div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-key"></i>
+                          </span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="{{ 'confirm.password' | translate }} *"
+                               formControlName="confirmPassword">
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'confirmPassword')?.errors?.required" class="invalid">{{ 'error.confirm.password.empty' | translate }}</div>
+                        <div *ngIf="isUserSubmit && control(userSignupForm, 'confirmPassword')?.errors?.mustMatch" class="invalid">{{ 'error.confirm.password.match' | translate }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <p class="f-14 mtb-15">By clicking Register, You agree to our <a href="#"
+                                                                                     target="_blank">Personvernerklaering</a>
+                      and <a href="#" target="_blank">Genrelle Vilkar</a></p>
+                  </div>
+                  <div class="col-md-12">
+                    <input type="submit" class="btn btn-primary btn-lg mtb-15" value="Register" />
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <h3 class="register-heading">{{ 'signup.chef.title' | translate }}</h3>
+              <form [formGroup]="chefSignupForm" (ngSubmit)="chefRegister()">
+                <div class="row register-form">
+                  <div class="col-md-6">
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'fname' | translate }} *"
+                          formControlName="fname">
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'fname')?.errors?.required" class="invalid">{{ 'error.fname.empty' | translate }}</div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'lname' | translate }} *"
+                          formControlName="lname">
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-key"></i>
+                          </span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="{{ 'password' | translate }} *"
+                          formControlName="password">
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'password')?.errors?.required" class="invalid">{{ 'error.password.empty' | translate }}</div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-map-marker"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'address' | translate }} *" (input)="updateSearchResults($event)"
+                               formControlName="address">
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'address')?.errors?.required" class="invalid">{{ 'error.address.empty' | translate }}</div>
+                        <div *ngIf="isChefSubmit && (chefParams?.longitude === -1 || chefParams?.latitude === -1)" class="invalid">{{ 'error.address.complete' | translate }}</div>
+                        <ion-list class="places-list" [hidden]="autocompleteItems.length === 0">
+                          <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectItem(item)">
+                            {{ item?.description }}
+                          </ion-item>
+                        </ion-list>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-envelope"></i>
+                          </span>
+                        </div>
+                        <input type="email" class="form-control" placeholder="{{ 'email' | translate }} *"
+                               formControlName="email">
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'email')?.errors?.required" class="invalid">{{ 'error.email.empty' | translate }}</div>
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'email')?.errors?.pattern" class="invalid">{{ 'error.email.invalid' | translate }}</div>
+                      </div>
+                    </div>
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-phone"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="{{ 'phoneno' | translate }} *"
+                               formControlName="phone">
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'phone')?.errors?.required" class="invalid">{{ 'error.phone.empty' | translate }}</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-key"></i>
+                          </span>
+                        </div>
+                        <input type="password" class="form-control"
+                               placeholder="{{ 'confirm.password' | translate }} *"
+                               formControlName="confirmPassword">
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'confirmPassword')?.errors?.required" class="invalid">{{ 'error.confirm.password.empty' | translate }}</div>
+                        <div *ngIf="isChefSubmit && control(chefSignupForm, 'confirmPassword')?.errors?.mustMatch" class="invalid">{{ 'error.confirm.password.match' | translate }}</div>
+                      </div>
+                    </div>
+
+                    <div class="form-group bmd-form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-gift"></i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control"
+                               placeholder="{{ 'referral.code' | translate }} *"
+                               formControlName="refral_code">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <p class="f-14 mtb-15">By clicking Register, You agree to our <a href="#"
+                                                                                     target="_blank">Personvernerklaering</a>
+                      and <a href="#" target="_blank">Genrelle Vilkar</a></p>
+                  </div>
+                  <div class="col-md-12">
+                    <input type="submit" class="btn btn-primary btn-lg mtb-15" value="Register"/>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</ion-content>

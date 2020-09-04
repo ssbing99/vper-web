@@ -1,0 +1,144 @@
+<ion-content>
+  <app-count-cost></app-count-cost>
+
+  <section class="nopadding">
+    <div class="container">
+      <div class="row clearfix">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="location" placeholder="Search by Name or Search by City..." (input)="updateSearchResults($event)">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <ion-list class="places-list" [hidden]="autocompleteItems.length === 0">
+              <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectItem(item)">
+                {{ item?.name }}
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="bg-search clearfix" *ngFor="let c of chefList">
+        <div class="row clearfix">
+          <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+            <aside>
+              <div class="profile clearfix">
+                <div class="pic">
+                  <ion-skeleton-text *ngIf="c?.user_image !== '' && !c.isLoaded" animated style="width: 75px;"></ion-skeleton-text>
+                  <img *ngIf="c?.user_image !== ''" src="{{ c?.user_image }}" (load)="imageLoad(c)" alt="Profile Pic" />
+                  <img *ngIf="c?.user_image == ''" src="assets/images/avatar-3.png" alt="Profile Pic" />
+                </div>
+                <div class="info">
+                  <div class="name">{{ c?.fname }} {{ c?.lname }}<span>{{ c?.city }}</span></div>
+<!--                  <div class="subtitle">Experience 2.5 Years</div>-->
+                </div>
+              </div>
+              <div class="ratingbox">
+                <div class="ratings">Ratings
+                  <app-star-ratings [rating]="c.review"></app-star-ratings>
+                </div>
+                <div class="ratings">Reviews <span class="pull-right">{{ c?.feedbacks.length }} Reviews</span></div>
+              </div>
+              <p class="chefdetails clearfix">{{ c?.about_me }}</p>
+              <a href="javascript:void(0)" class="btn btn-outline-white btn-lg btn-block" (click)="onShowChef(c)"><i class="fa fa-align-left mr10"></i> les mer om kokken</a>
+              <a href="javascript:void(0)" class="btn btn-primary btn-lg btn-block" tappable (click)="showChat(c)"><i class="fa fa-comments-o mr10"></i> {{ 'start.chat' | translate }}</a>
+            </aside>
+          </div>
+          <div class="col-12 col-sm-8 col-md-9 col-lg-9 col-xl-9">
+            <div class="title">Chef's Choice</div>
+            <div class="flexcontainer row">
+              <ion-label *ngIf="c?.dish.length === 0">There is no dish added yet.</ion-label>
+              <div class="imgbox col col-sm-3 px-0" *ngFor="let d of c?.dish | slice:0:4; let i = index">
+                <a class="mx-0 mx-sm-1" href="javascript:void(0)" (click)="onShowDetails(d)">
+                  <ion-skeleton-text *ngIf="d?.image !== '' && !d.isLoaded" animated style="width: 150px;"></ion-skeleton-text>
+                  <img src="{{d?.image}}" alt="Image goes here" (load)="dishImageLoad(d)" />
+                  <div class="caption">{{d?.name}}</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-search clearfix" *ngIf="!chefList">
+        <div class="row clearfix">
+          <div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-3">
+            <aside>
+              <div class="profile clearfix">
+                <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                <div class="info w-100">
+                  <div class="name"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></div>
+                  <div class="subtitle"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></div>
+                </div>
+              </div>
+              <div class="ratingbox">
+                <div class="ratings"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></div>
+                <div class="ratings"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></div>
+              </div>
+              <p class="chefdetails clearfix">
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+              </p>
+              <a href="javascript:void(0)" class="btn btn-outline-white btn-lg btn-block"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></a>
+              <a href="javascript:void(0)" class="btn btn-primary btn-lg btn-block"><ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text></a>
+            </aside>
+          </div>
+          <div class="col-12 col-sm-8 col-md-9 col-lg-9 col-xl-9">
+            <div class="title">Chef's Choice</div>
+            <div class="flexcontainer row">
+              <div class="imgbox col px-1">
+                <a href="javascript:void(0)" style="width: 100%;">
+                  <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                </a>
+              </div>
+              <div class="imgbox col px-1">
+                <a href="javascript:void(0)" style="width: 100%;">
+                  <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                </a>
+              </div>
+              <div class="imgbox col">
+                <a href="javascript:void(0)" style="width: 100%;">
+                  <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                </a>
+              </div>
+              <div class="imgbox col">
+                <a href="javascript:void(0)" style="width: 100%;" data-toggle="modal" data-target="#recipeDetails">
+                  <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                </a>
+              </div>
+              <div class="imgbox col">
+                <a href="javascript:void(0)" style="width: 100%;" data-toggle="modal" data-target="#recipeDetails">
+                  <ion-skeleton-text animated style="width: 100%;"></ion-skeleton-text>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="chefList">
+        <div class="text-center">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="params.page > 0"><a class="page-link" href="javascript:void(0)" (click)="goPreviousList()">Previous</a></li>
+            <li class="page-item" [ngClass]="{'active': i === params.page}" *ngFor="let no of Arr(totalCountPage).fill(1); let i = index;">
+              <a class="page-link" href="javascript:void(0)" (click)="getNewList(i)">{{ i + 1 }}</a>
+            </li>
+            <li class="page-item" *ngIf="params.page + 1 < totalCountPage"><a class="page-link" href="javascript:void(0)" (click)="goNextList()">Next</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</ion-content>

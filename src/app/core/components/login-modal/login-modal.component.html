@@ -1,0 +1,55 @@
+<div id="loginModal">
+  <div class="modal-dialog modal-login mt-5">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-header">
+          <div class="card-header card-header-primary text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="dismiss()"><i
+              class="fa fa-times"></i></button>
+            <h4 class="card-title">Logg in</h4>
+            <div class="social-line">
+              <a href="javascript:void(0)" class="btn btn-just-icon btn-link" (click)="loginFb()">
+                <i class="fa fa-facebook-square"></i>
+              </a>
+              <a href="javascript:void(0)" class="btn btn-just-icon btn-link" (click)="loginGoogle()">
+                <i class="fa fa-google-plus"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="form-group bmd-form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                          <span class="input-group-text">
+                              <i class="fa fa-envelope"></i>
+                          </span>
+                </div>
+                <input type="text" class="form-control" placeholder="E-post" [(ngModel)]="params.email">
+              </div>
+            </div>
+            <div class="form-group bmd-form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                          <span class="input-group-text">
+                              <i class="fa fa-key"></i>
+                          </span>
+                </div>
+                <input type="password" placeholder="Passord" class="form-control" [(ngModel)]="params.password">
+              </div>
+            </div>
+            <a class="f-14 mlr-15" href="#">Glemt passord?</a>
+            <br />
+            <a class="f-14 mlr-15" href="javascript:void(0)" (click)="goToSignUp()">Sign Up</a>
+          </div>
+        </div>
+
+        <div class="modal-footer justify-content-center">
+          <a href="javascript:void(0)" class="btn btn-outline-primary" (click)="login()">Logg in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

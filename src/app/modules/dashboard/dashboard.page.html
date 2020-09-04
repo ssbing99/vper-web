@@ -1,0 +1,219 @@
+<ion-content>
+  <section>
+    <div class="container">
+      <div class="row clearfix">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <h1>Dashbord</h1>
+        </div>
+      </div>
+      <div>
+        <form method="post">
+          <div class="row">
+            <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+              <div class="profile-img">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                <div class="file btn btn-lg btn-primary">
+                  Change Photo
+                  <input type="file" name="file"/>
+                </div>
+              </div>
+              <!-- <ul class="sidenav">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Mine Bestillinger</a></li>
+                <li><a href="#"><i class="fa fa-puzzle-piece"></i> Innstillinger</a></li>
+              </ul> -->
+            </div>
+            <div class="col-12 col-sm-9 col-md-8 col-lg-9 col-xl-9">
+              <div class="profile-head">
+                <h5>{{ user?.lname }} {{ user?.fname }}<input type="submit" class="btn btn-primary btn-sm pull-right" name="Loggout" value="Logg Out" (click)="logout()" /></h5>
+                <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item"><a class="nav-link" [ngClass]="{ 'active': index === 0 }" id="om-tab" data-toggle="tab" href="#om" role="tab" aria-controls="Om">Om</a></li>
+                  <li class="nav-item"><a class="nav-link" [ngClass]="{ 'active': index === 1 }" data-toggle="tab" href="#MineBestillinger" role="tab" aria-controls="MineBestillinger">Mine Bestillinger</a></li>
+                  <li class="nav-item"><a class="nav-link" [ngClass]="{ 'active': index === 2 }" data-toggle="tab" href="#Innstillinger" role="tab" aria-controls="Innstillinger">Inntillinger</a></li>
+                  <li class="nav-item"><a class="nav-link" [ngClass]="{ 'active': index === 3 }" data-toggle="tab" href="#byttpassord" role="tab" aria-controls="ByttPassord">Bytt passord</a></li>
+                </ul>
+
+                <div class="tab-content profile-tab" id="ProfileTab">
+                  <div class="tab-pane fade" [ngClass]="{'show active': index === 0}" id="om" role="tabpanel" aria-labelledby="om">
+                    <div class="row clearfix">
+                      <!-- <form method="post" action="" id="editProfile" role="form"> -->
+                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                          <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Fornavn" />
+                        </div>
+                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                          <input type="text" class="form-control" name="Etternavn" id="Etternavn" placeholder="Etternavn" />
+                        </div>
+                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                          <input type="number" class="form-control" name="Telefonnummer" id="Telefonnumer" placeholder="Telefonnummer" />
+                        </div>
+                        <div class="col-12">
+                          <input type="submit" name="submit" class="btn btn-primary" value="Lagre endringer" />
+                        </div>
+                      <!-- </form> -->
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" [ngClass]="{'show active': index === 1}" id="MineBestillinger" role="tabpanel" aria-labelledby="MineBestillinger">
+                    <div class="card clearfix">
+                      <div class="card-body">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                          <li class="nav-item"><a class="nav-link active" id="Gjeldende-Bestilling" data-toggle="tab" href="#GjeldendeBestilling" role="tab" aria-controls="GjeldendeBestilling" aria-selected="true" (click)="getBookingData('current')">{{ 'booking.current' | translate }}</a></li>
+                          <li class="nav-item"><a class="nav-link" id="Tidligere-Bestilling" data-toggle="tab" href="#TidligereBestilling" role="tab" aria-controls="TidligereBestilling" aria-selected="false" (click)="getBookingData('past')">{{ 'booking.past' | translate }}</a></li>
+                        </ul>
+                        <div class="tab-content profile-tab" id="myTabContent">
+                          <div class="tab-pane fade show active" id="GjeldendeBestilling" role="tabpanel" aria-labelledby="GjeldendeBestilling">
+                            <div *ngIf="bookingList?.length === 0 && loading" class="loading-list">
+                              <ion-skeleton-text animated style="width: 100%; height: 80px;"></ion-skeleton-text>
+                              <ion-skeleton-text animated style="width: 100%; height: 80px;"></ion-skeleton-text>
+                              <ion-skeleton-text animated style="width: 100%; height: 80px;"></ion-skeleton-text>
+                            </div>
+                            <!--Table-->
+                            <table *ngIf="!loading" class="table table-striped">
+                                <!--Table head-->
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'booking.name' | translate }}</th>
+                                        <th>Date</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <!--Table head-->
+                                <!--Table body-->
+                                <tbody>
+                                    <tr *ngFor="let book of bookingList">
+                                        <th>
+                                          <img *ngIf="book?.user_image" alt="" src="{{ book?.user_image }}" width="40" height="40" class="rounded-circle" />
+                                          <img *ngIf="!book?.user_image" alt="" src="assets/images/user-2.png" width="40" height="40" class="rounded-circle" />
+                                          &nbsp; {{ book?.fname }}
+                                        </th>
+                                        <td>{{ book?.bookingDate | date: 'dd MMM yy' }}</td>
+                                        <td>{{ book?.bookingFee }}Nok</td>
+                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm" (click)="showChat(book)"><i class="fa fa-eye"></i> {{ 'booking.show_details' | translate }}</a></td>
+                                    </tr>
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                            <!--Table-->
+                          </div>
+                          <div class="tab-pane fade" id="TidligereBestilling" role="tabpanel" aria-labelledby="TidligereBestilling">
+                            <div *ngIf="bookingList?.length === 0 && loading" class="loading-list">
+                              <ion-skeleton-text animated style="width: 100%; height: 80px;"></ion-skeleton-text>
+                              <ion-skeleton-text animated style="width: 100%; height: 80px;"></ion-skeleton-text>
+                              <ion-skeleton-text animated style="width: 100%; height: 80px;"></ion-skeleton-text>
+                            </div>
+
+                            <!--Table-->
+                            <table *ngIf="!loading" class="table table-striped">
+                                <!--Table head-->
+                                <thead>
+                                    <tr>
+                                        <th>{{ 'booking.name' | translate }}</th>
+                                        <th>Date</th>
+                                        <th>Price</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <!--Table head-->
+                                <!--Table body-->
+                                <tbody>
+                                  <tr *ngFor="let book of bookingList">
+                                    <th>
+                                      <img *ngIf="book?.user_image" alt="" src="{{ book?.user_image }}" width="40" height="40" class="rounded-circle" />
+                                      <img *ngIf="!book?.user_image" alt="" src="assets/images/user-2.png" width="40" height="40" class="rounded-circle" />
+                                      &nbsp; {{ book?.fname }}
+                                    </th>
+                                    <td>{{ book?.bookingDate | date: 'dd MMM yy' }}</td>
+                                    <td>{{ book?.bookingFee }}Nok</td>
+                                    <td><a href="javascript:void(0)" class="btn btn-primary btn-sm" (click)="openDetails(book)"><i class="fa fa-eye"></i> {{ 'booking.show_details' | translate }}</a></td>
+                                  </tr>
+                                </tbody>
+                                <!--Table body-->
+                            </table>
+                            <!--Table-->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" [ngClass]="{'show active': index === 2}" id="Innstillinger" role="tabpanel" aria-labelledby="Innstillinger">
+                    <div class="row clearfix">
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="border-box form-group">
+                          <i class="fa fa-bell"></i> Varsling
+                          <span class="pull-right">
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="VarslingOn" name="versling" class="custom-control-input">
+                              <label class="custom-control-label" for="VarslingOn">On</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="VarslingOff" name="versling" class="custom-control-input">
+                              <label class="custom-control-label" for="VarslingOff">Off</label>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="border-box form-group">
+                          <i class="fa fa-trash"></i> Del App
+                          <span class="pull-right">
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="DelAppYes" name="delapp" class="custom-control-input">
+                              <label class="custom-control-label" for="DelAppYes">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="DelAppNo" name="delapp" class="custom-control-input">
+                              <label class="custom-control-label" for="DelAppNo">No</label>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="border-box"><a href="#"><i class="fa fa-bullhorn"></i> Personvernregler</a></div>
+                      </div>
+                      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="border-box">
+                          <i class="fa fa-globe"></i> Sprak
+                          <span class="pull-right">
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="SprakEnglish" name="sprak" class="custom-control-input">
+                              <label class="custom-control-label" for="SprakEnglish">English</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                              <input type="radio" id="SprakNorwegian" name="sprak" class="custom-control-input">
+                              <label class="custom-control-label" for="SprakNorwegian">Norwegian</label>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" [ngClass]="{'show active': index === 3}" id="byttpassord" role="tabpanel" aria-labelledby="bytt-passord">
+                    <div class="row clearfix">
+                      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                        <input type="password" class="form-control" name="gammeltPassord" id="gammeltPassord" placeholder="Gammelt Passord" />
+                      </div>
+                      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                        <input type="password" class="form-control" name="NyttPassord" id="NyttPassord" placeholder="Nytt Passord" />
+                      </div>
+                      <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 mb-3">
+                        <input type="password" class="form-control" name="bekreftPassord" id="bekreftPassord" placeholder="Bekreft Passord" />
+                      </div>
+                      <div class="col-12">
+                        <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Sende Inn" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</ion-content>
