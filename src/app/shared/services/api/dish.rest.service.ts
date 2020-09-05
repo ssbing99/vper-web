@@ -99,4 +99,14 @@ export class DishRestService {
     params.method = 'GetChefPastbooking';
     return this.httpClient.post(this.BASE_URL, params);
   }
+
+  getChefReferralData(params: any) {
+    params.method = 'GetChefReferalData';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
+
+  getTotalIncomeData(params: any) {
+    params.method = 'GetChefAllbooking';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
 }

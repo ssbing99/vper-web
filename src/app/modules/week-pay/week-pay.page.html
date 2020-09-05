@@ -1,0 +1,54 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "2_week_pay.title" | translate }}</div>
+        <p class="dash-content">{{ "2_week_pay.p1" | translate }}</p>
+      </div>
+      <div class="col-12">
+        <table class="table">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Period</th>
+            <th scope="col">Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="!!dataDisplay && dataDisplay.length > 0">
+            <ng-container  *ngFor="let item of dataDisplay; let i = index">
+              <tr data-toggle="collapse" [attr.data-target]="'#breakdown_' + i" class="accordion-toggle">
+                <td><i class="fa fa-plus-circle"></i></td>
+                <td>{{ item?.datePeriod }}</td>
+                <td>{{ item?.total }}</td>
+              </tr>
+              <tr>
+                <td class="hiddenRow"></td>
+                <td colspan="2" class="hiddenRow">
+                  <div class="accordian-body collapse" [id]="'breakdown_' + i">
+                    <div class="row clearfix">
+                      <div class="col-6">Date</div>
+                      <div class="col-6 text-center">Total Earning</div>
+                    </div>
+                    <div class="row clearfix">
+                      <ng-container *ngFor="let breakdown of item?.breakdown">
+                        <div class="col-6">{{ breakdown?.date }}</div>
+                        <div class="col-6 text-center">{{ breakdown?.earning }}</div>
+                      </ng-container>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>

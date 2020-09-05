@@ -56,4 +56,14 @@ export class AuthRestService {
     params.method = 'getchefCommontips';
     return this.httpClient.post(this.BASE_URL, params);
   }
+
+  getWalletDetailUser(params: any) {
+    params.method = 'GetWalletDetailUser';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
+
+  getWalletTotalAmmountTwoWeek(params: any) {
+    params.method = 'GetWalletTotalAmmountTwoWeek';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
 }

@@ -81,7 +81,7 @@ export class AuthService {
           this.router.navigate(['/search-chef']);
           break;
         case AppConstant.CHEF_TYPE:
-          this.router.navigate(['/my-bookings']);
+          this.router.navigate(['/start-page']);
           break;
       }
 

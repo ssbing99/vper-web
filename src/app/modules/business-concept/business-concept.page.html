@@ -1,0 +1,26 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "bussiness_concept.title" | translate }}</div>
+        <p class="dash-content">{{ "bussiness_concept.p1" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p2" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p3" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p4" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p5" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p6" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p7" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p8" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p9" | translate }}</p>
+        <p class="dash-content">{{ "bussiness_concept.p10" | translate }}
+          <strong class="pointer" (click)="activatePage()">{{ "bussiness_concept.p11" | translate }} >>
+          </strong> {{ "bussiness_concept.p12" | translate }}
+        </p>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
