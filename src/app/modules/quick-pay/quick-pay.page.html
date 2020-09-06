@@ -10,7 +10,7 @@
         <p class="dash-content">{{ "quick_pay.p1" | translate }}</p>
       </div>
       <div class="col-12">
-        <table class="table">
+        <table class="table" *ngIf="!loading else loadingTpl">
           <thead class="thead-light">
           <tr>
             <th scope="col">Date</th>
@@ -19,7 +19,7 @@
           </tr>
           </thead>
           <tbody>
-          <ng-container *ngIf="!!weekPay && weekPay.length > 0">
+          <ng-container *ngIf="!!weekPay && weekPay.length > 0 else noRecordFoundTpl">
             <tr *ngFor="let item of weekPay">
               <td>{{ item?.created_date }}</td>
               <td>{{ item?.email }}</td>
@@ -32,3 +32,10 @@
     </div>
   </app-chef-layout>
 </ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

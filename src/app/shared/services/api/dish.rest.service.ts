@@ -109,4 +109,29 @@ export class DishRestService {
     params.method = 'GetChefAllbooking';
     return this.httpClient.post(this.BASE_URL, params);
   }
+
+  getChefReview(params: any) {
+    params.method = 'getChefReview';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
+
+  getChefDishdata(params: any) {
+    params.method = 'getChefDishdata';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
+
+  deleteDish(params: any) {
+    params.method = 'deleteChefDishdata';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
+
+  saveDish(params: any) {
+    params.method = 'addChefDish';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
+
+  updateDish(params: any) {
+    params.method = 'updateChefDishdata';
+    return this.httpClient.post(this.BASE_URL, params);
+  }
 }

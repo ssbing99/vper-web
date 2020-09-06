@@ -124,6 +124,30 @@ const routes: Routes = [
     data: {
       role: AppConstant.CHEF_TYPE
     }
+  },
+  {
+    path: 'view-reviews',
+    loadChildren: () => import('./modules/view-reviews/view-reviews.module').then( m => m.ViewReviewsPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'chef-choice',
+    loadChildren: () => import('./modules/chef-choice/chef-choice.module').then( m => m.ChefChoicePageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'add-dish',
+    loadChildren: () => import('./modules/add-dish/add-dish.module').then( m => m.AddDishPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
   }
 ];
 

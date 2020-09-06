@@ -11,7 +11,7 @@
         <p class="dash-content">{{ "refer_chef.p2" | translate }} {{ "refer_chef.p3" | translate }}</p>
         <p class="dash-content">{{ "refer_chef.p4" | translate }}.</p>
         <div class="col-12">
-          <table class="table">
+          <table class="table" *ngIf="!loading else loadingTpl">
             <thead class="thead-light">
             <tr>
               <th scope="col">Name</th>
@@ -20,28 +20,13 @@
             </tr>
             </thead>
             <tbody>
-            <ng-container *ngIf="!!referralListing && referralListing.length > 0">
+            <ng-container *ngIf="!!referralListing && referralListing.length > 0 else noRecordFoundTpl">
               <tr *ngFor="let referral of referralListing">
                 <td>{{ referral?.fname }}</td>
                 <td>{{ referral?.email }} [{{ referral?.user_referal_code }}]</td>
                 <td>{{ referral?.status == 0 ? 'Active' : 'Inactive' }}</td>
               </tr>
             </ng-container>
-            <!--<tr>
-              <td>Mark</td>
-              <td>otto@gmail.com</td>
-              <td>Active</td>
-            </tr>
-            <tr>
-              <td>Jacob</td>
-              <td>thornton@hotmail.com</td>
-              <td>Pending</td>
-            </tr>
-            <tr>
-              <td>Larry</td>
-              <td>the-bird@yahoo.co.in</td>
-              <td>Inactive</td>
-            </tr>-->
             </tbody>
           </table>
         </div>
@@ -49,3 +34,10 @@
     </div>
   </app-chef-layout>
 </ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

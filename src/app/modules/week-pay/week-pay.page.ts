@@ -3,7 +3,7 @@ import {BasePageComponent} from "../../core/components/base-page/base-page.compo
 import {LoginResponseModel} from "../../shared/models/login.model";
 import {StorageService} from "../../shared/services/storage.service";
 import {AppConstant} from "../../shared/constant/app.constant";
-import {tap} from "rxjs/operators";
+import {finalize, tap} from "rxjs/operators";
 import {ResponseModel} from "../../shared/models/request.model";
 import {AuthRestService} from "../../shared/services/api/auth.rest.service";
 
@@ -14,7 +14,7 @@ import {AuthRestService} from "../../shared/services/api/auth.rest.service";
 })
 export class WeekPayPage extends BasePageComponent implements OnInit {
   user: LoginResponseModel;
-  loading = false;
+  loading = true;
   dataDisplay: Array<any> = [];
   weekPay: any=[];
 
@@ -60,7 +60,8 @@ export class WeekPayPage extends BasePageComponent implements OnInit {
                     }
                   });
                 }
-              })
+              }),
+              finalize(() => this.loading = false)
           )
           .subscribe();
     }

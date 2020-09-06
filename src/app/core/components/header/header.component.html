@@ -63,8 +63,8 @@
 
             <div *ngIf="isChef" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="javascript:void(0)">Manage Profile</a>
-              <a class="dropdown-item" href="javascript:void(0)">Chef's Choice</a>
-              <a class="dropdown-item" href="javascript:void(0)">View Reviews</a>
+              <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/chef-choice']">Chef's Choice</a>
+              <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/view-reviews']">View Reviews</a>
               <a class="dropdown-item" href="javascript:void(0)">Settings</a>
               <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">Logout</a>
             </div>

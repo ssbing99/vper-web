@@ -1,0 +1,35 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ isEdit ? 'Edit Dishes' : 'Add Dishes'}}Add Dishes</div>
+        <div class="row clearfix form-padding" [formGroup]="dishForm">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-padding">
+              <input type="text" name="dishName" id="dishName" class="form-control" placeholder="Dish Name" formControlName="name"/>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-padding">
+              <select class="form-control" formControlName="status">
+                  <option disabled>Show in my profile</option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+              </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-padding">
+              <textarea class="form-control" id="message" name="message" placeholder="Message" rows="3" formControlName="grocerie"></textarea>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-padding">
+              <label>Dish Image </label>
+              <input type="file" name="dishImage" id="dishImage" placeholder="Dish Image" (change)="handleUpload($event)" />
+            </div>
+            <div class="col-12">
+              <input type="submit" (click)="saveDish()" class="btn btn-primary" value="ADD" />
+            </div>
+        </div>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>

@@ -4,7 +4,7 @@ import {LoginResponseModel} from "../../shared/models/login.model";
 import {StorageService} from "../../shared/services/storage.service";
 import {AppConstant} from "../../shared/constant/app.constant";
 import {DishRestService} from "../../shared/services/api/dish.rest.service";
-import {tap} from "rxjs/operators";
+import {finalize, tap} from "rxjs/operators";
 import {ResponseModel} from "../../shared/models/request.model";
 import {GetReferralRequestModel} from "../../shared/models/booking.model";
 
@@ -15,7 +15,7 @@ import {GetReferralRequestModel} from "../../shared/models/booking.model";
 })
 export class MyReferralPage extends BasePageComponent implements OnInit {
   user: LoginResponseModel;
-  loading = false;
+  loading = true;
   referralListing: Array<GetReferralRequestModel> = [];
 
   constructor(protected injector: Injector, private dishRestService: DishRestService,) {
@@ -32,7 +32,8 @@ export class MyReferralPage extends BasePageComponent implements OnInit {
               tap((res: ResponseModel<Array<GetReferralRequestModel>>) => {
                 const { data = [] } = res;
                 this.referralListing = data;
-              })
+              }),
+              finalize(() => this.loading = false)
           )
           .subscribe();
     }

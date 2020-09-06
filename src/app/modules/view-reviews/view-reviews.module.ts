@@ -4,23 +4,23 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MyReferralPageRoutingModule } from './my-referral-routing.module';
+import { ViewReviewsPageRoutingModule } from './view-reviews-routing.module';
 
-import { MyReferralPage } from './my-referral.page';
+import { ViewReviewsPage } from './view-reviews.page';
 import {UicChefLayoutComponentModule} from "../../shared/components/uic-chef-layout/uic-chef-layout.component.module";
-import {TranslateModule} from "@ngx-translate/core";
 import {UicSkeletonComponentModule} from "../../shared/components/uic-skeleton/uic-skeleton.component.module";
+import {UicStarRatingComponentModule} from "../../shared/components/uic-star-rating/uic-star-rating.component.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MyReferralPageRoutingModule,
+    ViewReviewsPageRoutingModule,
     UicChefLayoutComponentModule,
-    TranslateModule,
-    UicSkeletonComponentModule
+    UicSkeletonComponentModule,
+    UicStarRatingComponentModule
   ],
-  declarations: [MyReferralPage]
+  declarations: [ViewReviewsPage]
 })
-export class MyReferralPageModule {}
+export class ViewReviewsPageModule {}

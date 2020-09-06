@@ -10,6 +10,7 @@ import {ApiInterceptor} from './interceptor/api.interceptor';
 import {UtilService} from '../shared/services/util.service';
 import {AuthService} from './services/auth.service';
 import {UicFooterComponentModule} from '../shared/components/uic-footer/uic-footer.component.module';
+import {RouterModule} from "@angular/router";
 
 const CORE_COMPONENTS = [
   AppHeaderComponent,
@@ -19,11 +20,12 @@ const CORE_COMPONENTS = [
 
 @NgModule({
   declarations: [...CORE_COMPONENTS],
-  imports: [
-    CommonModule,
-    FormsModule,
-    UicFooterComponentModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        UicFooterComponentModule,
+        RouterModule
+    ],
   providers: [
     UtilService
   ],

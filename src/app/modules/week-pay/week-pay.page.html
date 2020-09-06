@@ -10,7 +10,7 @@
         <p class="dash-content">{{ "2_week_pay.p1" | translate }}</p>
       </div>
       <div class="col-12">
-        <table class="table">
+        <table class="table" *ngIf="!loading else loadingTpl">
           <thead class="thead-light">
           <tr>
             <th scope="col"></th>
@@ -19,7 +19,7 @@
           </tr>
           </thead>
           <tbody>
-          <ng-container *ngIf="!!dataDisplay && dataDisplay.length > 0">
+          <ng-container *ngIf="!!dataDisplay && dataDisplay.length > 0 else noRecordFoundTpl">
             <ng-container  *ngFor="let item of dataDisplay; let i = index">
               <tr data-toggle="collapse" [attr.data-target]="'#breakdown_' + i" class="accordion-toggle">
                 <td><i class="fa fa-plus-circle"></i></td>
@@ -52,3 +52,10 @@
     </div>
   </app-chef-layout>
 </ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

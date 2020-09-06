@@ -9,6 +9,7 @@ import { WeekPayPageRoutingModule } from './week-pay-routing.module';
 import { WeekPayPage } from './week-pay.page';
 import {UicChefLayoutComponentModule} from "../../shared/components/uic-chef-layout/uic-chef-layout.component.module";
 import {TranslateModule} from "@ngx-translate/core";
+import {UicSkeletonComponentModule} from "../../shared/components/uic-skeleton/uic-skeleton.component.module";
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {TranslateModule} from "@ngx-translate/core";
         IonicModule,
         WeekPayPageRoutingModule,
         UicChefLayoutComponentModule,
-        TranslateModule
+        TranslateModule,
+        UicSkeletonComponentModule
     ],
   declarations: [WeekPayPage]
 })

@@ -1,36 +1,42 @@
 import {Component, Injector, OnInit} from '@angular/core';
 import {BasePageComponent} from "../../core/components/base-page/base-page.component";
+import {DishRestService} from "../../shared/services/api/dish.rest.service";
 import {LoginResponseModel} from "../../shared/models/login.model";
 import {StorageService} from "../../shared/services/storage.service";
 import {AppConstant} from "../../shared/constant/app.constant";
 import {finalize, tap} from "rxjs/operators";
 import {ResponseModel} from "../../shared/models/request.model";
-import {AuthRestService} from "../../shared/services/api/auth.rest.service";
 
 @Component({
-  selector: 'app-quick-pay',
-  templateUrl: './quick-pay.page.html',
-  styleUrls: ['./quick-pay.page.scss'],
+  selector: 'app-view-reviews',
+  templateUrl: './view-reviews.page.html',
+  styleUrls: ['./view-reviews.page.scss'],
 })
-export class QuickPayPage extends BasePageComponent implements OnInit {
+export class ViewReviewsPage extends BasePageComponent implements OnInit {
   user: LoginResponseModel;
   loading = true;
-  weekPay: any = [];
+  page: number=0;
+  reviews: Array<any> = [];
 
-  constructor(protected injector: Injector, private authRestService: AuthRestService) {
+  constructor(protected injector: Injector, private dishRestService: DishRestService) {
     super(injector);
   }
 
   async ngOnInit(): Promise<void> {
     this.user = await StorageService.getItem(AppConstant.USER_KEY);
+    this.getReviews();
+  }
+
+  getReviews() {
     if (!!this.user) {
       const { id = '' } = this.user;
-      this.authRestService.getWalletDetailUser({ user_id: id})
+      this.dishRestService.getChefReview({ chef_id: id, page: this.page })
           .pipe(
               tap((res: ResponseModel<any>) => {
                 if (!!res) {
-                  const { data = [] } = res;
-                  this.weekPay = data;
+                  const { data = {} } = res;
+                  const { review = [] } = data;
+                  this.reviews = review;
                 }
               }),
               finalize(() => this.loading = false)
@@ -38,5 +44,6 @@ export class QuickPayPage extends BasePageComponent implements OnInit {
           .subscribe();
     }
   }
+
 
 }
