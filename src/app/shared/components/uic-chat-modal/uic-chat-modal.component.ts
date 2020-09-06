@@ -17,6 +17,7 @@ import {ChatRequestModal} from '../../models/chat.modal';
 export class UicChatModalComponent implements OnInit {
   @Input() toUserId: string;
   @Input() toUserImage: string;
+  @Input() isChef: boolean = false;
 
   chatData = [];
   user: LoginResponseModel;

@@ -148,6 +148,14 @@ const routes: Routes = [
     data: {
       role: AppConstant.CHEF_TYPE
     }
+  },
+  {
+    path: 'chef-chat-list',
+    loadChildren: () => import('./modules/chef-chat-list/chef-chat-list.module').then( m => m.ChefChatListPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
   }
 ];
 
