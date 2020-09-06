@@ -61,6 +61,102 @@ const routes: Routes = [
       role: AppConstant.CHEF_TYPE
     }
   },
+  {
+    path: 'start-page',
+    loadChildren: () => import('./modules/start/start.module').then(m => m.StartPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'referral',
+    loadChildren: () => import('./modules/referral/referral.module').then( m => m.ReferralPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'my-referral',
+    loadChildren: () => import('./modules/my-referral/my-referral.module').then( m => m.MyReferralPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'support',
+    loadChildren: () => import('./modules/support/support.module').then( m => m.SupportPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'quick-pay',
+    loadChildren: () => import('./modules/quick-pay/quick-pay.module').then( m => m.QuickPayPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'week-pay',
+    loadChildren: () => import('./modules/week-pay/week-pay.module').then( m => m.WeekPayPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'chef-my-earning',
+    loadChildren: () => import('./modules/chef-my-earning/chef-my-earning.module').then( m => m.ChefMyEarningPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'business-concept',
+    loadChildren: () => import('./modules/business-concept/business-concept.module').then( m => m.BusinessConceptPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'view-reviews',
+    loadChildren: () => import('./modules/view-reviews/view-reviews.module').then( m => m.ViewReviewsPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'chef-choice',
+    loadChildren: () => import('./modules/chef-choice/chef-choice.module').then( m => m.ChefChoicePageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'add-dish',
+    loadChildren: () => import('./modules/add-dish/add-dish.module').then( m => m.AddDishPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  },
+  {
+    path: 'chef-chat-list',
+    loadChildren: () => import('./modules/chef-chat-list/chef-chat-list.module').then( m => m.ChefChatListPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
+  }
 ];
 
 @NgModule({

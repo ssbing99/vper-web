@@ -1,0 +1,58 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> Chef's Choice<a (click)="addDish()" class="btn btn-primary btn-sm float-right pointer">Add Dishes</a></div>
+        <table class="table table-striped" *ngIf="!loading else loadingTpl">
+          <thead>
+          <tr>
+            <th>Dishes</th>
+            <th align="right" style="text-align: right;">Action</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="!!chefChoices && chefChoices.length > 0 else noRecordFoundTpl">
+            <ng-container *ngFor="let chefChoice of chefChoices">
+              <tr>
+                <td>
+                  <div class="dish-name">
+                    <img style="width: 40px; height: 40px" class="rounded-circle img-fluid"  [src]="chefChoice?.image" onerror="this.src = 'assets/images/food.png'" alt="Image goes here" />
+                    <p>{{ chefChoice?.name }}</p>
+                  </div>
+                </td>
+                <td align="right">
+                  <div class="options">
+                    <a class="pointer" (click)="addDish(chefChoice)"><i class="fa fa-pencil"></i></a>
+                    <a class="pointer" (click)="deleteDish(chefChoice?.id)"><i class="fa fa-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="!!chefChoices && chefChoices.length > 0 && totalPage > 1">
+          <div class="text-center">
+            <ul class="pagination">
+              <li class="page-item" *ngIf="params.page > 0"><a class="page-link" href="javascript:void(0)" (click)="goPreviousList()">Previous</a></li>
+              <li class="page-item" [ngClass]="{'active': i === params.page}" *ngFor="let no of Arr(totalPage).fill(1); let i = index;">
+                <a class="page-link" href="javascript:void(0)" (click)="getNewList(i)">{{ i + 1 }}</a>
+              </li>
+              <li class="page-item" *ngIf="params.page + 1 < totalPage"><a class="page-link" href="javascript:void(0)" (click)="goNextList()">Next</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

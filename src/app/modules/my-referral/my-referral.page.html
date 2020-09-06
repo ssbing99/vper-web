@@ -1,0 +1,43 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "refer_chef.title" | translate }}</div>
+        <p class="dash-content">{{ "refer_chef.p1" | translate }}</p>
+        <p class="dash-content">{{ "refer_chef.p2" | translate }} {{ "refer_chef.p3" | translate }}</p>
+        <p class="dash-content">{{ "refer_chef.p4" | translate }}.</p>
+        <div class="col-12">
+          <table class="table" *ngIf="!loading else loadingTpl">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngIf="!!referralListing && referralListing.length > 0 else noRecordFoundTpl">
+              <tr *ngFor="let referral of referralListing">
+                <td>{{ referral?.fname }}</td>
+                <td>{{ referral?.email }} [{{ referral?.user_referal_code }}]</td>
+                <td>{{ referral?.status == 0 ? 'Active' : 'Inactive' }}</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

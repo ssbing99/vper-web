@@ -133,3 +133,11 @@ export interface GetCurrentChefBookingRequestModel extends RequestModel {
   chef_id?: string;
   datetime?: any;
 }
+
+export interface GetReferralRequestModel {
+  fname?: string;
+  lname?: string;
+  status?: number;
+  user_referal_code?: string;
+  email?: string;
+}

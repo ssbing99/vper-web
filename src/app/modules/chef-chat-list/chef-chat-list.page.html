@@ -1,0 +1,29 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <table class="table table-striped" *ngIf="!loading else loadingTpl">
+          <tbody *ngIf="!!chatInfoList && chatInfoList.length > 0 else noRecordFoundTpl">
+            <ng-container *ngFor="let chatInfo of chatInfoList">
+              <tr class="pointer" (click)="showChat(chatInfo)">
+                <td><i class="fa fa-user-circle-o"></i></td>
+                <td align="left">{{ chatInfo?.fname }} {{ chatInfo?.lname }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

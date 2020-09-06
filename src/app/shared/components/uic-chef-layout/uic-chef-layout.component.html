@@ -21,22 +21,22 @@
                 <ul id="menu-content" class="menu-content collapse out">
                   <li data-toggle="collapse" data-target="#dashboard" class="collapsed"><a href="javascript:void(0)"><i class="fa fa-dashboard fa-lg"></i> Dashboard <span class="arrow"></span></a></li>
                   <ul class="sub-menu collapse" id="dashboard">
-                    <li><a href="chef-dashboard.html">Startpage</a></li>
-                    <li><a href="yper-sharing.html">Yper Sharing</a></li>
-                    <li><a href="my-refferals.html">My Refferals</a></li>
+                    <li [routerLink]="['/start-page']">Startpage</li>
+                    <li [routerLink]="['/referral']">Yper Sharing</li>
+                    <li [routerLink]="['/my-referral']">My Refferals</li>
                     <li><a href="yper-member-upgrade.html">Yper Member Upgrade</a></li>
-                    <li><a href="yper-support.html">Yper Support</a></li>
+                    <li [routerLink]="['/support']">Yper Support</li>
                   </ul>
                   <li data-toggle="collapse" data-target="#earnings" class="collapsed"><a href="javascript:void(0)"><i class="fa fa-money fa-lg"></i> My Earnings <span class="arrow"></span></a></li>
                   <ul class="sub-menu collapse" id="earnings">
-                    <li><a href="quick-pay.html">Quick Pay</a></li>
-                    <li><a href="week-pay.html">2nd Week Pay</a></li>
+                    <li [routerLink]="['/quick-pay']">Quick Pay</li>
+                    <li [routerLink]="['/week-pay']">2nd Week Pay</li>
                     <li [routerLink]="['/common-tips']"><a href="javascript:void(0)">Common Tips</a></li>
-                    <li><a href="total-income.html">Total Income</a></li>
+                    <li [routerLink]="['/chef-my-earning']">Total Income</li>
                   </ul>
                   <li [routerLink]="['/my-bookings']"><a href="javascript:void(0)"><i class="fa fa-calendar fa-lg"></i> My Booking</a></li>
-                  <li><a href="business-concept.html"><i class="fa fa-briefcase fa-lg"></i> Business Concept</a></li>
-                  <li><a href="chat-list.html"><i class="fa fa-comment fa-lg"></i> Chat List</a></li>
+                  <li [routerLink]="['/business-concept']"><a href="javascript:void(0)"><i class="fa fa-briefcase fa-lg"></i> Business Concept</a></li>
+                  <li [routerLink]="['/chef-chat-list']"><a href="javascript:void(0)"><i class="fa fa-comment fa-lg"></i> Chat List</a></li>
                 </ul>
               </div>
             </div>

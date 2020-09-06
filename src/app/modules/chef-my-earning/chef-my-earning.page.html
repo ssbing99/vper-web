@@ -1,0 +1,56 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "total_income.title" | translate }}</div>
+        <p class="dash-content">{{ "total_income.p1" | translate }}</p>
+      </div>
+      <div class="col-12">
+        <ul class="list-group mtb10">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ "total_income.title" | translate }}
+            <span class="badge badge-primary badge-pill">
+              {{ totalIncome | number:'1.2-2' }} Nok
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12">
+        <table class="table table-striped" *ngIf="!loading else loadingTpl">
+          <tbody>
+            <ng-container *ngIf="!!arrIncome && arrIncome.length > 0 else noRecordFoundTpl">
+              <tr *ngFor="let income of arrIncome">
+                <th><i class="fa fa-user-circle-o"></i></th>
+                <td>{{ income?.fname }}</td>
+                <td>{{ income?.book_date }}</td>
+                <td>{{ income?.ammount | number:'1.2-2' }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="!!arrIncome && arrIncome.length > 0">
+          <div class="text-center">
+            <ul class="pagination">
+              <li class="page-item" *ngIf="params.page > 0"><a class="page-link" href="javascript:void(0)" (click)="goPreviousList()">Previous</a></li>
+              <li class="page-item" [ngClass]="{'active': i === params.page}" *ngFor="let no of Arr(totalPage).fill(1); let i = index;">
+                <a class="page-link" href="javascript:void(0)" (click)="getNewList(i)">{{ i + 1 }}</a>
+              </li>
+              <li class="page-item" *ngIf="params.page + 1 < totalPage"><a class="page-link" href="javascript:void(0)" (click)="goNextList()">Next</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton loadingBar="30"></app-uic-skeleton>
+</ng-template>

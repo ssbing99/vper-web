@@ -1,0 +1,37 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ 'welcome.title' | translate }}</div>
+        <p class="dash-content">{{ "welcome.p1" | translate }}.</p>
+        <p class="dash-content">{{ "welcome.p2" | translate }}.{{ "welcome.p3" | translate }}.</p>
+        <p class="dash-content">{{ "welcome.p4" | translate }}.{{ "welcome.p5" | translate }}.</p>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ 'chef_account.activate' | translate }}</div>
+        <p class="dash-content">{{ "chef_account.p1" | translate }}.<br />
+          {{ "chef_account.p2" | translate }} <a class="pointer" (click)="redirectToMemberUpgradePage()"><strong>{{ "chef_account.strong" | translate }} >></strong></a> {{ "chef_account.p3" | translate }}.</p>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "welcome_concept.title" | translate }}</div>
+        <p class="dash-content">{{ "welcome_concept.p" | translate }}.</p>
+      </div>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "media_request.title" | translate }}</div>
+        <p class="dash-content">{{ "media_request.p1" | translate }} <strong>
+          <a [href]="'mailto:' + ('media_request.a' | translate)">{{ "media_request.a" | translate }}</a>
+        </strong>– {{ "media_request.p2" | translate }}</p>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>

@@ -1,0 +1,42 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> View Reviews</div>
+        <table class="table" *ngIf="!loading else loadingTpl">
+          <tbody *ngIf="!!reviews && reviews.length > 0 else noReviewTpl">
+            <ng-container *ngFor="let review of reviews; let i = index">
+              <tr>
+                <td>
+                  <div class="dish-name">
+                    <img style="width: 40px; height: 40px" class="rounded-circle img-fluid" [src]="review?.user_image" onerror="this.src = 'assets/images/user.png'" alt="Image goes here" />
+                    <p>
+                      <span>{{ review?.fname }}</span>
+                      {{ review?.review_text }}
+                    </p>
+                  </div>
+                </td>
+                <td>
+                  <div class="options">
+                    <app-star-ratings *ngIf="review?.ratings" [rating]="review?.ratings"></app-star-ratings>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+
+<ng-template #noReviewTpl>
+  <div><p>No one reviewed yet.</p></div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

@@ -1,0 +1,41 @@
+<ion-content>
+  <app-chef-layout>
+    <div class="profile-head clearfix">
+      <h5>{{ user?.fname }} {{ user?.lname }}</h5>
+      <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
+    </div>
+    <div class="row clearfix">
+      <div class="col-12">
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ "quick_pay.title" | translate }}</div>
+        <p class="dash-content">{{ "quick_pay.p1" | translate }}</p>
+      </div>
+      <div class="col-12">
+        <table class="table" *ngIf="!loading else loadingTpl">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Email</th>
+            <th scope="col">Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="!!weekPay && weekPay.length > 0 else noRecordFoundTpl">
+            <tr *ngFor="let item of weekPay">
+              <td>{{ item?.created_date }}</td>
+              <td>{{ item?.email }}</td>
+              <td>{{ item?.ammount }}</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </app-chef-layout>
+</ion-content>
+
+<ng-template #noRecordFoundTpl>
+  <div>No Record Found</div>
+</ng-template>
+<ng-template #loadingTpl>
+  <app-uic-skeleton></app-uic-skeleton>
+</ng-template>

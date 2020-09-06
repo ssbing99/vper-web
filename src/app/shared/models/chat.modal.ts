@@ -26,3 +26,12 @@ export interface ChatContentModel {
   user_id_to?: string;
   timestamp?: any;
 }
+
+export interface ChatInfoModel {
+  chatId?: string;
+  fname?: string;
+  id?: string;
+  lname?: string;
+  register_type?: string;
+  user_image?: string;
+}
