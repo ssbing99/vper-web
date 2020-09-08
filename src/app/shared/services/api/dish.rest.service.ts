@@ -130,13 +130,31 @@ export class DishRestService {
         return this.httpClient.post(this.BASE_URL, params);
     }
 
+    /**
+     * Depreceated
+     * @param params
+     */
     saveDish(params: any) {
         params.method = 'addChefDish';
         return this.httpClient.post(this.BASE_URL, params);
     }
 
+    /**
+     * Depreceated
+     * @param params
+     */
     updateDish(params: any) {
         params.method = 'updateChefDishdata';
+        return this.httpClient.post(this.BASE_URL, params);
+    }
+
+    updateChefDishDataWithUpload(params: any) {
+        params.method = 'updateChefDishdataWithUpload';
+        return this.httpClient.post(this.BASE_URL, params);
+    }
+
+    addChefDishWithUpload(params: any) {
+        params.method = 'addChefDishWithUpload';
         return this.httpClient.post(this.BASE_URL, params);
     }
 

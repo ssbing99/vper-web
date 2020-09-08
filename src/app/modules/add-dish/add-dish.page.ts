@@ -7,6 +7,10 @@ import {AppConstant} from "../../shared/constant/app.constant";
 import {LoginResponseModel} from "../../shared/models/login.model";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UploadRestService} from "../../shared/services/api/upload.rest.service";
+import {environment} from "../../../environments/environment";
+import {finalize, tap} from "rxjs/operators";
+import {LoadingService} from "../../shared/services/loading.service";
 
 @Component({
   selector: 'app-add-dish',
@@ -17,18 +21,21 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
   user: LoginResponseModel;
   isEdit = false;
   editDishInfo: any;
+  loading = false;
 
   dishForm = new FormGroup({
     name: new FormControl(undefined),
     status: new FormControl('1'),
     grocerie: new FormControl(undefined),
-    image: new FormControl(''),
+    image: new FormControl(undefined),
     id: new FormControl(undefined),
   });
 
   constructor(protected injector: Injector,
               private dishRestService: DishRestService,
               private alertService: AlertService,
+              private uploadService: UploadRestService,
+              private loadingService: LoadingService,
               private router: Router) {
     super(injector);
     try {
@@ -45,20 +52,15 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
   }
 
   ngAfterViewInit(): void {
-    console.log(this.editDishInfo);
     if (this.isEdit && this.editDishInfo) {
       const { name = '', status = 0, grocery = '', id, image } = this.editDishInfo;
       this.dishForm.patchValue({
         name: name,
         status: status,
         grocerie: grocery,
+        image: image,
         id
       });
-      if (!!image && image.length > 0) {
-        this.getBase64ImageFromUrl(image)
-            .then(result => this.dishForm.get('image').setValue(result))
-            .catch(err => console.error(err));
-      }
     }
   }
 
@@ -67,7 +69,7 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
       const { id = '' } = this.user;
       if (this.isEdit) {
         const { name, status, grocerie, image, id } = this.dishForm.getRawValue();
-        this.dishRestService.updateDish({ name, status, grocery: grocerie, image, id, user_id: this.user.id })
+        this.dishRestService.updateChefDishDataWithUpload({ name, status, grocery: grocerie, image, id, user_id: this.user.id })
             .subscribe((res: any) => {
               const { status, ProfileStatus } = res;
               if (status == 200) {
@@ -80,7 +82,7 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
             })
       } else {
         const { name, status, grocerie, image } = this.dishForm.getRawValue();
-        this.dishRestService.saveDish({ name, status, grocerie, image, user_id: id })
+        this.dishRestService.addChefDishWithUpload({ name, status, grocerie, image, user_id: id })
             .subscribe((res: any) => {
               if (res.status == 200) {
                 this.alertService.presentSuccessAlert('Dish added successfully!').then();
@@ -104,37 +106,35 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
   }
 
   handleUpload(event, fileData?: any) {
+    this.loadingService.presentLoading().then(() => this.loading = true)
     const file = event ? event.target.files[0] : fileData;
-    console.log(fileData);
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      this.dishForm.get('image').setValue(reader.result);
-    };
+    this.uploadService.uploadImage(file, '1')
+        .pipe(
+          tap(res => {
+            const { data: { imagePath } } = res;
+            if (!!imagePath) {
+              this.dishForm.controls.image.setValue(imagePath);
+            } else {
+              this.alertService.presentErrorAlert('Failed to upload.').then();
+            }
+          }),
+          finalize(() => {
+            this.loading = false;
+            this.loadingService.dismiss();
+          }))
+        .subscribe();
   }
 
-  async getBase64ImageFromUrl(imageUrl) {
-    let res = await fetch(imageUrl);
-    let blob = await res.blob();
-
-    return new Promise((resolve, reject) => {
-      var reader  = new FileReader();
-      reader.addEventListener("load", function () {
-        resolve(reader.result);
-      }, false);
-
-      reader.onerror = () => {
-        return reject(this);
-      };
-      reader.readAsDataURL(blob);
-    })
+  get dishImage(): string {
+    try {
+      if (this.dishForm.controls.image.value.indexOf(environment.serverUrl) < 0) {
+        const fullURL = environment.serverUrl + '/' + this.dishForm.controls.image.value;
+        return fullURL
+      } else {
+        return this.dishForm.controls.image.value;
+      }
+    } catch (e) {
+      return '';
+    }
   }
-}
-
-export interface DishRequestModel {
-  name?: string;
-  image?: string;
-  status?: number;
-  grocerie?: string;
-  id?: number;
 }

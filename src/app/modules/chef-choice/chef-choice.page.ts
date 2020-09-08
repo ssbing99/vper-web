@@ -32,6 +32,12 @@ export class ChefChoicePage extends BasePageComponent implements OnInit {
     super(injector);
   }
 
+
+  ionViewDidEnter() {
+    super.ionViewDidEnter();
+    this.getChefDishData();
+  }
+
   async ngOnInit(): Promise<void> {
     this.user = await StorageService.getItem(AppConstant.USER_KEY);
     this.getChefDishData();
@@ -39,6 +45,7 @@ export class ChefChoicePage extends BasePageComponent implements OnInit {
 
   getChefDishData() {
     if (!!this.user) {
+      this.loading = true;
       const { id = '' } = this.user;
       this.dishRestService.getChefDishdata({ user_id: id, ...this.params })
           .pipe(
