@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -10,6 +10,7 @@ import { DashboardPage } from './dashboard.page';
 import { UicFooterComponentModule } from 'src/app/shared/components/uic-footer/uic-footer.component.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {UicPastChatModalComponentModule} from '../../shared/components/uic-past-chat-modal/uic-past-chat-modal.component.module';
+import { UicUserTermsModalComponentModule } from 'src/app/shared/components/uic-user-terms-modal/uic-user-terms-modal.component.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,9 @@ import {UicPastChatModalComponentModule} from '../../shared/components/uic-past-
     DashboardPageRoutingModule,
     UicFooterComponentModule,
     UicPastChatModalComponentModule,
-    TranslateModule.forChild()
+    UicUserTermsModalComponentModule,
+    TranslateModule.forChild(),
+    ReactiveFormsModule
   ],
   declarations: [DashboardPage]
 })

@@ -6110,6 +6110,10 @@ a.close.disabled {
   margin: 0.25rem;
 }
 
+.modal-scroll-y {
+  overflow-y: scroll;
+}
+
 .modal-scrollbar-measure {
   position: absolute;
   top: -9999px;

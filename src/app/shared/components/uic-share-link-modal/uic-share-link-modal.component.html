@@ -1,0 +1,25 @@
+<div id="shareModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header justify-content-end">
+        <ion-button fill="clear" color="dark" (click)="dismiss()">
+          <span aria-hidden="true" style="font-size: 20px;">&times;</span>
+        </ion-button>
+      </div>
+      <div class="modal-body">
+        <div class="row clearfix">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="modaltitle">{{ link?.title }}</div>
+            <div class="share-link-modal-body">
+              <a id="link" [href]="link?.link">{{link?.link}}</a>
+            </div>
+<!--            <p class="modalcontent">{{ dish?.grocery }}</p>-->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" (click)="copyToClipboard(link?.link)" class="btn btn-primary pull-left">Kopiere</a>
+      </div>
+    </div>
+  </div>
+</div>

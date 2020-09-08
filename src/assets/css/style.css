@@ -1103,6 +1103,9 @@ p.reviewdetails span {
   color: #4393b1;
   line-height: 1.5;
 }
+.modal-scroll-y {
+  overflow-y: scroll;
+}
 .modal-dialog .modal-body {
   color: #3C4858;
 }
@@ -1264,6 +1267,33 @@ p.modalcontent {
   display: block;
   margin: 0;
   padding: 0;
+}
+
+.custom-modal-long-css .modal-wrapper .modaltitle,
+.custom-modal-long-css .modal-wrapper h5{
+  text-align: center;
+}
+
+.custom-modal-long-css .modal-wrapper {
+  height: 90%;
+}
+
+.modal-body.modal-scroll-y.modal-long-max {
+  max-height: 550px !important;
+}
+
+@media (min-width: 400px) and (max-width: 700px) {
+  .modal-body.modal-scroll-y.modal-long-max {
+    max-height: 500px !important;
+  }
+}
+
+.share-link-modal-body{
+  background-color: lightgray;
+  border-radius: 10px;
+  text-align: center;
+  height: 40px;
+  padding: 5px;
 }
 /* Modal Css Ends */
 /* Chat Css Starts */

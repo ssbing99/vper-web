@@ -22,6 +22,11 @@ export interface LoginResponseModel {
   user_image?: string;
   user_referal_code?: string;
   user_type?: string;
+  country?: string;
+  city?: string;
+  address?: string;
+  about_me?: string;
+
 }
 
 export interface LoginFacebookModel extends RequestModel {
