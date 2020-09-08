@@ -4,7 +4,7 @@ import {LoginResponseModel} from '../../shared/models/login.model';
 import {StorageService} from '../../shared/services/storage.service';
 import {AppConstant} from '../../shared/constant/app.constant';
 import {DishRestService} from '../../shared/services/api/dish.rest.service';
-import {finalize, tap} from 'rxjs/operators';
+import {catchError, finalize, tap} from 'rxjs/operators';
 import {ResponseModel} from '../../shared/models/request.model';
 import {BookingDetailsModel} from '../../shared/models/booking.model';
 import {AlertController, ModalController} from '@ionic/angular';
@@ -19,6 +19,10 @@ import { UicUserTermsModalComponent } from 'src/app/shared/components/uic-user-t
 import { LanguageService } from 'src/app/shared/services/language.service';
 import {UicShareLinkModalComponent} from '../../shared/components/uic-share-link-modal/uic-share-link-modal.component';
 import {FormControl, FormGroup} from '@angular/forms';
+import {of, throwError} from 'rxjs';
+import {UtilService} from '../../shared/services/util.service';
+import {UploadRestService} from '../../shared/services/api/upload.rest.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -51,6 +55,8 @@ export class DashboardPage extends BasePageComponent implements OnInit {
   });
 
   constructor(protected injector: Injector,
+              private utilService: UtilService,
+              private uploadService: UploadRestService,
               private dishRestService: DishRestService,
               private userRestService: UserRestService,
               private router: Router,
@@ -105,9 +111,50 @@ export class DashboardPage extends BasePageComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.imageURI = reader.result;
-      this.showImage = this.imageURI;
+      let img = new Image();
+      let width:number, height:number;
+      let validMsg;
+
+      img.onload = async () => {
+        width = img.width;
+        height = img.height;
+
+        validMsg = await this.utilService.validateUploadFile(file, width, height);
+
+        if(validMsg == null){
+          this.uploadService.uploadImage(file,"2").pipe(
+              tap((res: ResponseModel<any>) => {
+                    const { data = null, message } = res;
+                    if(data!=null && !!data.imagePath) {
+                      this.imageURI = data.imagePath;
+                      this.showImage = this.imageURI;
+                    }else{
+                      this.alertService.presentErrorAlert(message);
+                    }
+              }),
+              catchError((err) => throwError(err))
+          ).subscribe();;
+
+        }else {
+          this.alertService.presentErrorAlert(validMsg);
+        }
+      };
+
+      img.src = reader.result.toString(); // This is the data URL
     };
+  }
+
+  get userImage(): string {
+    try {
+      if (this.imageURI.indexOf(environment.serverUrl) < 0) {
+        const fullURL = environment.serverUrl + '/' + this.imageURI;
+        return fullURL
+      } else {
+        return this.imageURI;
+      }
+    } catch (e) {
+      return '';
+    }
   }
 
   updateUserProfile() {

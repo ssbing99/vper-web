@@ -2,7 +2,7 @@
   <app-chef-layout
           [uploadImg]="true"
           [imageURI]="user?.user_image"
-          [displayImage]="showImage"
+          [displayImage]="userImage"
           (onHandleUpload)="handleUpload($event)">
     <div class="profile-head clearfix">
       <h5>{{ user?.fname }} {{ user?.lname }}</h5>

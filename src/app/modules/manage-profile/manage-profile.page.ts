@@ -3,7 +3,7 @@ import {BasePageComponent} from "../../core/components/base-page/base-page.compo
 import {LoginResponseModel} from "../../shared/models/login.model";
 import {StorageService} from "../../shared/services/storage.service";
 import {AppConstant} from "../../shared/constant/app.constant";
-import {finalize, tap} from "rxjs/operators";
+import {catchError, finalize, tap} from 'rxjs/operators';
 import {ResponseModel} from "../../shared/models/request.model";
 import {FormControl, FormGroup} from '@angular/forms';
 import {LoadingService} from '../../shared/services/loading.service';
@@ -14,6 +14,10 @@ import {LanguageService} from '../../shared/services/language.service';
 import {ModalController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {UicChefTermsModalComponent} from '../../shared/components/uic-chef-terms-modal/uic-chef-terms-modal.component';
+import {throwError} from 'rxjs';
+import {UtilService} from '../../shared/services/util.service';
+import {UploadRestService} from '../../shared/services/api/upload.rest.service';
+import {environment} from '../../../environments/environment';
 
 
 @Component({
@@ -49,6 +53,8 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
   });
 
   constructor(protected injector: Injector,
+              private utilService: UtilService,
+              private uploadService: UploadRestService,
               private router: Router,
               private modalCtrl: ModalController,
               private userRestService: UserRestService,
@@ -103,9 +109,50 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.imageURI = reader.result;
-      this.showImage = this.imageURI;
+      let img = new Image();
+      let width:number, height:number;
+      let validMsg;
+
+      img.onload = async () => {
+        width = img.width;
+        height = img.height;
+
+        validMsg = await this.utilService.validateUploadFile(file, width, height);
+
+        if(validMsg == null){
+          this.uploadService.uploadImage(file,"2").pipe(
+              tap((res: ResponseModel<any>) => {
+                const { data = null, message } = res;
+                if(data!=null && !!data.imagePath) {
+                  this.imageURI = data.imagePath;
+                  this.showImage = this.imageURI;
+                }else{
+                  this.alertService.presentErrorAlert(message);
+                }
+              }),
+              catchError((err) => throwError(err))
+          ).subscribe();;
+
+        }else {
+          this.alertService.presentErrorAlert(validMsg);
+        }
+      };
+
+      img.src = reader.result.toString(); // This is the data URL
     };
+  }
+
+  get userImage(): string {
+    try {
+      if (this.imageURI.indexOf(environment.serverUrl) < 0) {
+        const fullURL = environment.serverUrl + '/' + this.imageURI;
+        return fullURL
+      } else {
+        return this.imageURI;
+      }
+    } catch (e) {
+      return '';
+    }
   }
 
   updateUserProfile() {
