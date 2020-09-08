@@ -99,7 +99,7 @@ export class ChefChoicePage extends BasePageComponent implements OnInit {
     }
   }
 
-  addDish(dish: any) {
+  addDish(dish?: any) {
     if (!!dish) {
       this.router.navigate(['/add-dish'], { state: { editDish: dish } }).then();
     } else {

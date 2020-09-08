@@ -27,6 +27,7 @@
     "chef_register":"Chef Registration",
     "change_photo": "Change Photo",
     "bussiness_concept": {
+        "title": "Business Concept",
         "p1": "The new chef life",
         "p2": "Yperchef is the world’s first crowd business for chef.",
         "p3": "Unlike the traditional approach where restaurant attracts costumers though advertising, instead we reward our chef for sharing Yperchef with other chefs.",
@@ -63,6 +64,8 @@
         "head": "My Booking",
         "past": "Past Booking",
         "current": "Current Booking",
+        "name": "Name",
+        "show_details": "Show Details",
         "my_review": "My Review"
     },
     "booking_detail_checf": {
@@ -174,9 +177,11 @@
         "p2": "The Yperchefs Support Team works hard to ensure that all members receive a reply to their questions within 24 to 48 hours, Monday to Sunday. Currently we assist in English and Norwegian. Other languages will be added as the Yperchefs business grows."
     },
     "quick_pay": {
+        "title": "Quick Pay",
         "p1": "This is an overview of your quick pay earnings, which are paid in cash, daily Monday to Friday (Saturday and Sunday are paid Monday).Your Earnings are posted in the «Total Earnings» beneath «My Earnings»"
     },
     "2_week_pay": {
+        "title": "2nd Week Pay",
         "p1": "This is an overview of your 2nd week pay earnings. After you have worked for 14 days, you get paid '2nd week pay' which is all your assignments in 14 days.Your earnings are posted in the 'Total Earnings' beneath ' My Earnings'"
     },
     "common_tips": {

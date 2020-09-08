@@ -328,7 +328,7 @@ export class DashboardPage extends BasePageComponent implements OnInit {
 
   async changeLanguage(lng: string){
     this.languageService.setLanguage(lng);
-    this.currLng = this.languageService.getCurrentLanguage()
+    this.currLng = this.languageService.getCurrentLanguage();
   }
 
   async updateNotification(status: string){
