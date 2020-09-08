@@ -156,6 +156,14 @@ const routes: Routes = [
     data: {
       role: AppConstant.CHEF_TYPE
     }
+  },
+  {
+    path: 'manage-profile',
+    loadChildren: () => import('./modules/manage-profile/manage-profile.module').then( m => m.ManageProfilePageModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: AppConstant.CHEF_TYPE
+    }
   }
 ];
 
