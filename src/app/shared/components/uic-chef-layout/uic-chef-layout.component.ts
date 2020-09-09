@@ -30,7 +30,6 @@ export class UicChefLayoutComponent {
 
   async ngOnInit() {
     this.user = await StorageService.getItem(AppConstant.USER_KEY);
-    console.log(this.user);
   }
 
   get userImage(): string {
@@ -87,7 +86,7 @@ export class UicChefLayoutComponent {
 
   updateUserProfile() {
     if(this.imageURI){
-      this.user['user_image'] = this.imageURI;
+      this.user['user_image'] = this.utilService.replceImagePath(this.user['user_image']);
       this.displayImage = this.userImage;
     }
     this.userRestService.upDateUserDetail(this.user).pipe(

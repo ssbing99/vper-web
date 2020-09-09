@@ -12,7 +12,7 @@
             <div class="profile-img">
               <img *ngIf="!displayImage && !(user?.user_image)" class="default-avatar" src="assets/images/avatar-3.png" alt=""/>
               <img [src]="displayImage" alt="" *ngIf="displayImage" class="default-avatar" onerror="this.src = 'assets/images/avatar-3.png'">
-              <img [src]="user?.user_image" alt="" *ngIf="!displayImage" class="default-avatar">
+              <img [src]="user?.user_image" alt="" *ngIf="!displayImage" class="default-avatar" onerror="this.src = 'assets/images/avatar-3.png'">
               <div class="file btn btn-lg btn-primary" *ngIf="uploadImg">
                 Change Photo
                 <input type="file" name="file" (change)="handleUpload($event)"/>

@@ -43,7 +43,6 @@ export class AuthService {
                 tap(async (res: ResponseModel<LoginResponseModel>) => await this.handleLogin(res)),
                 finalize(() => {
                   this.loadingService.dismiss();
-                  console.log('here');
                 })
               ).subscribe();
             });

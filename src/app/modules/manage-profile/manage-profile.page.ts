@@ -50,8 +50,8 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
     fname: new FormControl(undefined, [Validators.required]),
     lname: new FormControl(undefined,),
     phone: new FormControl(undefined, [Validators.required]),
-    country: new FormControl(undefined,[Validators.required, Validators.min(1)]),
-    city: new FormControl(undefined,[Validators.required]),
+    country: new FormControl(undefined),
+    city: new FormControl(undefined),
     address: new FormControl(undefined,[Validators.required]),
     aboutMe: new FormControl(undefined),
     image: new FormControl(''),
@@ -182,8 +182,10 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
     this.isSubmit = true;
     if(this.profileForm.valid){
       if(this.imageURI){
-        this.profile['user_image'] = this.imageURI;
+        this.profile['user_image'] = this.utilService.replceImagePath(this.imageURI);
         this.showImage = this.imageURI;
+      }else{
+        this.profile['user_image'] = this.utilService.replceImagePath(this.user['user_image']);
       }
 
       const { fname, lname, phone, country ,city, address, aboutMe } = this.profileForm.getRawValue();
@@ -196,7 +198,7 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
       this.profile.address = address;
       this.profile.about_me = aboutMe;
       this.profile.latitude = this.chefParams.latitude;
-      this.profile.latitude =  this.chefParams.longitude,
+      this.profile.latitude =  this.chefParams.longitude;
 
       this.loadingService.presentLoading().then(() => {
         this.userRestService.upDateUserDetail(this.profile).pipe(
@@ -262,7 +264,7 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
 
   async changeLanguage(lng: string){
     this.languageService.setLanguage(lng);
-    this.currLng = this.languageService.getCurrentLanguage()
+    this.currLng = this.languageService.getCurrentLanguage();
   }
 
   async updateNotification(status: string){
@@ -293,13 +295,12 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
   }
 
   changeCountry(e) {
-    console.log(e);
     this.profileForm.controls.country.setValue(parseInt(e.target.value));
   }
 
   updateSearchResults(event) {
-    // this.chefParams.latitude = -1;
-    // this.user.longitude = -1;
+    this.chefParams.latitude = "-1";
+    this.chefParams.longitude = "-1";
     if (event.target.value === '') {
       this.autocompleteItems = [];
       return;
@@ -327,7 +328,6 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
       address: item.description
     }, (result, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
-        console.log(result[0]);
         this.chefParams.latitude = result[0].geometry.location.lat();
         this.chefParams.longitude = result[0].geometry.location.lng();
 

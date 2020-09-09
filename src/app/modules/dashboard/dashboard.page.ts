@@ -88,7 +88,6 @@ export class DashboardPage extends BasePageComponent implements OnInit {
           this.user.push_notification_settings = this.push_setting;
           this.imageURI = this.user.user_image;
           this.showImage = this.user.user_image;
-          console.log(this.user);
         }),
         finalize(() => {
           this.profileForm.patchValue({
@@ -164,11 +163,12 @@ export class DashboardPage extends BasePageComponent implements OnInit {
 
   updateUserProfile() {
     this.isSubmit = true;
-    console.log(this.profileForm)
     if(this.profileForm.valid) {
       if (this.imageURI) {
-        this.profile['user_image'] = this.imageURI;
+        this.profile['user_image'] = this.utilService.replceImagePath(this.imageURI);
         this.showImage = this.imageURI;
+      }else{
+        this.profile['user_image'] = this.utilService.replceImagePath(this.user['user_image']);
       }
 
       const {fname, lname, phone} = this.profileForm.getRawValue();

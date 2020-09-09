@@ -25,8 +25,11 @@ export class UtilService {
 
   isAssetPath = (url: string): boolean => url.indexOf('assets') >= 0;
 
+  replceImagePath(oriPath: string){
+    return oriPath.substring(oriPath.indexOf("uploads"));
+  }
+
   async validateUploadFile(file: File, width:number, height:number){
-    console.log("start", file, width, height);
     if(file && file != null && file != undefined){
       let fileExt = file.name.split(".").pop();
 
