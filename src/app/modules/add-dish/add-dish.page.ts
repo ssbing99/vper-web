@@ -113,10 +113,11 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
           tap(res => {
             const { data: { imagePath } = { imagePath: ''}, message } = res;
             if (!!message) {
-              this.alertService.presentErrorAlert(message).then();
-              if (!this.isEdit) {
-                this.dishForm.controls.image.setValue(undefined);
-              }
+              this.alertService.presentErrorAlert(message).then(() => {
+                if (!this.isEdit) {
+                  this.dishForm.controls.image.setValue(undefined);
+                }
+              });
             } else {
               if (!!imagePath) {
                 this.dishForm.controls.image.setValue(imagePath);
@@ -125,7 +126,11 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
               }
             }
           }),
-          catchError(() => this.alertService.presentErrorAlert('Failed to upload.').then()),
+          catchError(() => this.alertService.presentErrorAlert('Failed to upload.').then(() => {
+            if (!this.isEdit) {
+              this.dishForm.controls.image.setValue(undefined);
+            }
+          })),
           finalize(() => {
             this.loading = false;
             this.loadingService.dismiss();
