@@ -59,8 +59,8 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
   });
 
   chefParams: UserAccountRequestModel = {
-    latitude: "-1",
-    longitude: "-1",
+    latitude: "-99999",
+    longitude: "-99999",
   };
 
   constructor(protected injector: Injector,
@@ -299,8 +299,8 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
   }
 
   updateSearchResults(event) {
-    this.chefParams.latitude = "-1";
-    this.chefParams.longitude = "-1";
+    this.chefParams.latitude = "-99999";
+    this.chefParams.longitude = "-99999";
     if (event.target.value === '') {
       this.autocompleteItems = [];
       return;

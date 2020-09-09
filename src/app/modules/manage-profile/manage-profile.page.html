@@ -95,7 +95,7 @@
                                         </div>
                                         <input type="text" class="form-control" placeholder='{{ "address" | translate }}' (input)="updateSearchResults($event)" formControlName="address">
                                         <div *ngIf="isSubmit && control(profileForm, 'address')?.errors?.required" class="invalid">{{ 'error.address.empty' | translate }}</div>
-                                        <div *ngIf="isSubmit && (user?.longitude == -1 || user?.latitude == -1)" class="invalid">{{ 'error.address.complete' | translate }}</div>
+                                        <div *ngIf="isSubmit && (user?.longitude == -99999 || user?.latitude == -99999)" class="invalid">{{ 'error.address.complete' | translate }}</div>
                                         <ion-list class="places-list" [hidden]="autocompleteItems.length === 0">
                                             <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectItem(item)">
                                                 {{ item?.description }}
