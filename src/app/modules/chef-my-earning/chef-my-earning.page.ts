@@ -18,12 +18,11 @@ export class ChefMyEarningPage extends BasePageComponent implements OnInit {
 
   arrIncome: Array<any> = [];
   last = false;
-  page = 0;
   totalPage = 1;
   totalIncome = 0;
 
   params: any = {
-    page: 0
+    page: 1
   };
 
 

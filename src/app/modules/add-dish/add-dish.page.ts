@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UploadRestService} from "../../shared/services/api/upload.rest.service";
 import {environment} from "../../../environments/environment";
-import {finalize, tap} from "rxjs/operators";
+import {catchError, finalize, tap} from "rxjs/operators";
 import {LoadingService} from "../../shared/services/loading.service";
 
 @Component({
@@ -111,13 +111,18 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
     this.uploadService.uploadImage(file, '1')
         .pipe(
           tap(res => {
-            const { data: { imagePath } } = res;
-            if (!!imagePath) {
-              this.dishForm.controls.image.setValue(imagePath);
+            const { data: { imagePath } = { imagePath: ''}, message } = res;
+            if (!!message) {
+              this.alertService.presentErrorAlert(message).then();
             } else {
-              this.alertService.presentErrorAlert('Failed to upload.').then();
+              if (!!imagePath) {
+                this.dishForm.controls.image.setValue(imagePath);
+              } else {
+                this.alertService.presentErrorAlert('Failed to upload.').then();
+              }
             }
           }),
+          catchError(() => this.alertService.presentErrorAlert('Failed to upload.').then()),
           finalize(() => {
             this.loading = false;
             this.loadingService.dismiss();

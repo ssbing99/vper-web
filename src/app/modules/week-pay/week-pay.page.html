@@ -10,7 +10,7 @@
         <p class="dash-content">{{ "2_week_pay.p1" | translate }}</p>
       </div>
       <div class="col-12">
-        <table class="table" *ngIf="!loading else loadingTpl">
+        <table class="table table-striped" *ngIf="!loading else loadingTpl">
           <thead class="thead-light">
           <tr>
             <th scope="col"></th>
@@ -24,20 +24,20 @@
               <tr data-toggle="collapse" [attr.data-target]="'#breakdown_' + i" class="accordion-toggle">
                 <td><i class="fa fa-plus-circle"></i></td>
                 <td>{{ item?.datePeriod }}</td>
-                <td>{{ item?.total }}</td>
+                <td>{{ item?.total }}kr</td>
               </tr>
               <tr>
                 <td class="hiddenRow"></td>
                 <td colspan="2" class="hiddenRow">
                   <div class="accordian-body collapse" [id]="'breakdown_' + i">
-                    <div class="row clearfix">
-                      <div class="col-6">Date</div>
-                      <div class="col-6 text-center">Total Earning</div>
+                    <div class="row clearfix breakdown-header">
+                      <div class="col-6 breakdown-header-row">Date</div>
+                      <div class="col-6 text-center breakdown-header-row">Total Earning</div>
                     </div>
-                    <div class="row clearfix">
+                    <div class="row clearfix active">
                       <ng-container *ngFor="let breakdown of item?.breakdown">
-                        <div class="col-6">{{ breakdown?.date }}</div>
-                        <div class="col-6 text-center">{{ breakdown?.earning }}</div>
+                        <div class="col-6 breakdown-content">{{ breakdown?.date }}</div>
+                        <div class="col-6 text-center breakdown-content">{{ breakdown?.earning }}kr</div>
                       </ng-container>
                     </div>
                   </div>

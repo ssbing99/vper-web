@@ -1,3 +1,25 @@
 .hiddenRow {
   padding: 0 !important;
 }
+
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th {
+  background-color: whitesmoke; // Choose your own color here
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th {
+  background-color: white; // Choose your own color here
+}
+
+.breakdown-header {
+  padding: 5px;
+}
+
+.breakdown-header-row {
+  text-decoration: underline;
+}
+
+.breakdown-content {
+  padding-bottom: 5px;
+}

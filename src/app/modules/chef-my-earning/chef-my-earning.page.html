@@ -11,6 +11,24 @@
       </div>
       <div class="col-12">
         <ul class="list-group mtb10">
+          <li class="list-group-item d-flex align-items-center">
+            <div class="col-3">
+              {{ "total_income.h" | translate }}
+            </div>
+            <div class="col-3">
+              <span class="badge badge-primary badge-pill order">&nbsp;</span>&nbsp;{{ "total_income.p2" | translate }}
+            </div>
+            <div class="col-3">
+              <span class="badge badge-primary badge-pill memberupgrade">&nbsp;</span>&nbsp;{{ "total_income.p3" | translate }}
+            </div>
+            <div class="col-3">
+              <span class="badge badge-primary badge-pill commontips">&nbsp;</span>&nbsp;{{ "total_income.p4" | translate }}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12">
+        <ul class="list-group mtb10">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             {{ "total_income.title" | translate }}
             <span class="badge badge-primary badge-pill">
@@ -20,14 +38,14 @@
         </ul>
       </div>
       <div class="col-12">
-        <table class="table table-striped" *ngIf="!loading else loadingTpl">
+        <table class="table" *ngIf="!loading else loadingTpl">
           <tbody>
             <ng-container *ngIf="!!arrIncome && arrIncome.length > 0 else noRecordFoundTpl">
-              <tr *ngFor="let income of arrIncome">
+              <tr *ngFor="let income of arrIncome" [class]="income?.type">
                 <th><i class="fa fa-user-circle-o"></i></th>
                 <td>{{ income?.fname }}</td>
                 <td>{{ income?.book_date }}</td>
-                <td>{{ income?.ammount | number:'1.2-2' }}</td>
+                <td>{{ income?.ammount | number:'1.2-2' }}&nbsp;Nok</td>
               </tr>
             </ng-container>
           </tbody>
@@ -35,9 +53,9 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" *ngIf="!!arrIncome && arrIncome.length > 0">
           <div class="text-center">
             <ul class="pagination">
-              <li class="page-item" *ngIf="params.page > 0"><a class="page-link" href="javascript:void(0)" (click)="goPreviousList()">Previous</a></li>
-              <li class="page-item" [ngClass]="{'active': i === params.page}" *ngFor="let no of Arr(totalPage).fill(1); let i = index;">
-                <a class="page-link" href="javascript:void(0)" (click)="getNewList(i)">{{ i + 1 }}</a>
+              <li class="page-item" *ngIf="params.page > 1"><a class="page-link" href="javascript:void(0)" (click)="goPreviousList()">Previous</a></li>
+              <li class="page-item" [ngClass]="{'active': i + 1 === params.page}" *ngFor="let no of Arr(totalPage).fill(1); let i = index;">
+                <a class="page-link" href="javascript:void(0)" (click)="getNewList(i + 1)">{{ i + 1 }}</a>
               </li>
               <li class="page-item" *ngIf="params.page + 1 < totalPage"><a class="page-link" href="javascript:void(0)" (click)="goNextList()">Next</a></li>
             </ul>

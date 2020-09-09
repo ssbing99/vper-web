@@ -6,7 +6,7 @@
     </div>
     <div class="row clearfix">
       <div class="col-12">
-        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ isEdit ? 'Edit Dishes' : 'Add Dishes'}}Add Dishes</div>
+        <div class="dash-title"><i class="fa fa-cutlery"></i> {{ isEdit ? 'Edit Dishes' : 'Add Dishes'}}</div>
         <div class="row clearfix form-padding" [formGroup]="dishForm">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 form-padding">
               <input type="text" name="dishName" id="dishName" class="form-control" placeholder="Dish Name" formControlName="name"/>
@@ -30,7 +30,7 @@
                 </div>
                 <div>
                     <div class="col-12">
-                        <img [src]="dishImage" id="preview" onerror="this.src = 'assets/images/food.png'" class="img-thumbnail">
+                        <img [src]="dishImage" id="preview" onerror="this.src = 'assets/images/food.png'" class="img-thumbnail dish-image">
                     </div>
                 </div>
             </div>
