@@ -20,13 +20,13 @@ export class UserRestService {
 
   upDateCustomerDetail(params: UserAccountRequestModel) {
     params.userId = params.id;
-    params.method = 'updateuserProfile'
+    params.method = 'updateuserProfileWithUpload'
     return this.httpClient.post(this.BASE_URL, params);
   }
 
   upDateUserDetail(params: UserAccountRequestModel) {
     params.userId = params.id;
-    params.method = 'updateChefProfile'
+    params.method = 'updateChefProfileWithUpload'
     return this.httpClient.post(this.BASE_URL, params);
   }
 

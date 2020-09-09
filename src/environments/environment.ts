@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://192.168.0.105:8000/api/',
-  // serverUrl: 'http://192.168.0.105:8000',
-  apiUrl: 'https://yperkokk.com/yper-app/api/',
-  serverUrl: 'https://yperkokk.com/yper-app',
+  apiUrl: 'http://192.168.0.105:8000/api/',
+  serverUrl: 'http://192.168.0.105:8000',
+  // apiUrl: 'https://yperkokk.com/yper-app/api/',
+  // serverUrl: 'https://yperkokk.com/yper-app',
   firebaseConfig: {
     apiKey: 'AIzaSyARwT4XQtGwMhQ3kky0xu_-VM3zvz5FiwM',
     authDomain: 'adproject-1098.firebaseapp.com',

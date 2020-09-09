@@ -4,7 +4,7 @@ import {LoginResponseModel} from '../../shared/models/login.model';
 import {StorageService} from '../../shared/services/storage.service';
 import {AppConstant} from '../../shared/constant/app.constant';
 import {DishRestService} from '../../shared/services/api/dish.rest.service';
-import {finalize, tap} from 'rxjs/operators';
+import {catchError, finalize, tap} from 'rxjs/operators';
 import {ResponseModel} from '../../shared/models/request.model';
 import {BookingDetailsModel} from '../../shared/models/booking.model';
 import {AlertController, ModalController} from '@ionic/angular';
@@ -18,7 +18,11 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { UicUserTermsModalComponent } from 'src/app/shared/components/uic-user-terms-modal/uic-user-terms-modal.component';
 import { LanguageService } from 'src/app/shared/services/language.service';
 import {UicShareLinkModalComponent} from '../../shared/components/uic-share-link-modal/uic-share-link-modal.component';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {of, throwError} from 'rxjs';
+import {UtilService} from '../../shared/services/util.service';
+import {UploadRestService} from '../../shared/services/api/upload.rest.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +30,7 @@ import {FormControl, FormGroup} from '@angular/forms';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage extends BasePageComponent implements OnInit {
+  isSubmit = false;
   currLng: any;
   user: LoginResponseModel;
   profile: UserAccountRequestModel = {};
@@ -43,14 +48,16 @@ export class DashboardPage extends BasePageComponent implements OnInit {
   public newPass: any = '';
   public confirmPass: any = '';
   profileForm = new FormGroup({
-    fname: new FormControl(undefined),
+    fname: new FormControl(undefined, [Validators.required]),
     lname: new FormControl(undefined),
-    phone: new FormControl(undefined),
+    phone: new FormControl(undefined, [Validators.required]),
     image: new FormControl(''),
     id: new FormControl(undefined),
   });
 
   constructor(protected injector: Injector,
+              private utilService: UtilService,
+              private uploadService: UploadRestService,
               private dishRestService: DishRestService,
               private userRestService: UserRestService,
               private router: Router,
@@ -64,6 +71,10 @@ export class DashboardPage extends BasePageComponent implements OnInit {
       this.index = this.router.getCurrentNavigation().extras.state.index;
     }
 
+  }
+
+  control(form: FormGroup, name: string): AbstractControl {
+    return form.controls[name];
   }
 
   async ngOnInit() {
@@ -105,39 +116,83 @@ export class DashboardPage extends BasePageComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      this.imageURI = reader.result;
-      this.showImage = this.imageURI;
+      let img = new Image();
+      let width:number, height:number;
+      let validMsg;
+
+      img.onload = async () => {
+        width = img.width;
+        height = img.height;
+
+        validMsg = await this.utilService.validateUploadFile(file, width, height);
+
+        if(validMsg == null){
+          this.uploadService.uploadImage(file,"2").pipe(
+              tap((res: ResponseModel<any>) => {
+                    const { data = null, message } = res;
+                    if(data!=null && !!data.imagePath) {
+                      this.imageURI = data.imagePath;
+                      this.showImage = this.imageURI;
+                    }else{
+                      this.alertService.presentErrorAlert(message);
+                    }
+              }),
+              catchError((err) => throwError(err))
+          ).subscribe();;
+
+        }else {
+          this.alertService.presentErrorAlert(validMsg);
+        }
+      };
+
+      img.src = reader.result.toString(); // This is the data URL
     };
   }
 
-  updateUserProfile() {
-    if(this.imageURI){
-      this.profile['user_image'] = this.imageURI;
-      this.showImage = this.imageURI;
+  get userImage(): string {
+    try {
+      if (this.imageURI.indexOf(environment.serverUrl) < 0) {
+        const fullURL = environment.serverUrl + '/' + this.imageURI;
+        return fullURL
+      } else {
+        return this.imageURI;
+      }
+    } catch (e) {
+      return '';
     }
+  }
 
-    const { fname, lname, phone } = this.profileForm.getRawValue();
+  updateUserProfile() {
+    this.isSubmit = true;
+    console.log(this.profileForm)
+    if(this.profileForm.valid) {
+      if (this.imageURI) {
+        this.profile['user_image'] = this.imageURI;
+        this.showImage = this.imageURI;
+      }
 
-    this.profile.fname = fname;
-    this.profile.lname = lname;
-    this.profile.phone = phone;
+      const {fname, lname, phone} = this.profileForm.getRawValue();
 
-    this.loadingService.presentLoading().then(() => {
-      this.userRestService.upDateCustomerDetail(this.profile).pipe(
-        tap((res: ResponseModel<any>) => {
-          if(res.status == 200){
-            this.profile = res.data;
-            this.user = res.data;
-            this.alertService.presentSuccessAlert(res.message);
-          }
-        }),
-        finalize(() => this.loadingService.dismiss())
-      ).subscribe(async () => {
-        await StorageService.setItem(AppConstant.USER_KEY, this.user);
-        this.user = await StorageService.getItem(AppConstant.USER_KEY);
+      this.profile.fname = fname;
+      this.profile.lname = lname;
+      this.profile.phone = phone;
+
+      this.loadingService.presentLoading().then(() => {
+        this.userRestService.upDateCustomerDetail(this.profile).pipe(
+            tap((res: ResponseModel<any>) => {
+              if (res.status == 200) {
+                this.profile = res.data;
+                this.user = res.data;
+                this.alertService.presentSuccessAlert(res.message);
+              }
+            }),
+            finalize(() => this.loadingService.dismiss())
+        ).subscribe(async () => {
+          await StorageService.setItem(AppConstant.USER_KEY, this.user);
+          this.user = await StorageService.getItem(AppConstant.USER_KEY);
+        });
       });
-    });
-
+    }
   }
 
   changePassword() {
@@ -281,7 +336,7 @@ export class DashboardPage extends BasePageComponent implements OnInit {
 
   async changeLanguage(lng: string){
     this.languageService.setLanguage(lng);
-    this.currLng = this.languageService.getCurrentLanguage()
+    this.currLng = this.languageService.getCurrentLanguage();
   }
 
   async updateNotification(status: string){
