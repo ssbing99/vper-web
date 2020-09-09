@@ -114,6 +114,9 @@ export class AddDishPage extends BasePageComponent implements OnInit, AfterViewI
             const { data: { imagePath } = { imagePath: ''}, message } = res;
             if (!!message) {
               this.alertService.presentErrorAlert(message).then();
+              if (!this.isEdit) {
+                this.dishForm.controls.image.setValue(undefined);
+              }
             } else {
               if (!!imagePath) {
                 this.dishForm.controls.image.setValue(imagePath);
