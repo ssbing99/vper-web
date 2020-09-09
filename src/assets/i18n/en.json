@@ -37,6 +37,7 @@
     "error.address.complete": "Please Complete Address",
     "error.city.empty": "Please Enter City Name",
     "error.country.empty": "Please Select Country",
+    "error.address.invalid": "Invalid Address",
     "error": "Something wrong please try after sometimes",
     "bussiness_concept": {
         "title": "Business Concept",

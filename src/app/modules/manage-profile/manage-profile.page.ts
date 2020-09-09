@@ -119,7 +119,6 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
 
     this.userRestService.getCountry().pipe(
         tap((res: ResponseModel<any>) => {
-          console.log("res", res);
           if(res.status == 200){
             this.country = res.data;
           }
@@ -180,7 +179,7 @@ export class ManageProfilePage extends BasePageComponent implements OnInit {
 
   updateUserProfile() {
     this.isSubmit = true;
-    if(this.profileForm.valid){
+    if(this.profileForm.valid && !(this.chefParams.latitude == "-99999" && this.chefParams.latitude == "-99999")){
       if(this.imageURI){
         this.profile['user_image'] = this.utilService.replceImagePath(this.imageURI);
         this.showImage = this.imageURI;
