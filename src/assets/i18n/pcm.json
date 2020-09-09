@@ -29,6 +29,8 @@
   "error.confirm.password.match": "Confirm Password is not match with Password",
   "error.address.empty": "Please Enter Address",
   "error.address.complete": "Please Complete Address",
+  "error.city.empty": "Please Enter City Name",
+  "error.country.empty": "Please Select Country",
   "error": "Something wrong please try after sometimes",
   "start.chat": "Start Chat",
   "order": "Bestill",

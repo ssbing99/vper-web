@@ -1,0 +1,17 @@
+.invalid {
+  display: block;
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+  padding-left: 3rem;
+}
+
+.places-list {
+  display: block;
+  width: 100%;
+  margin-left: 2.5rem;
+  position: absolute;
+  z-index: 99;
+  top: 38px;
+}

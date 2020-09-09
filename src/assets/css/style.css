@@ -2186,3 +2186,8 @@ p.dash-content {
 .options i:last-child {
   margin-right: 0;
 }
+
+.default-avatar {
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -11,8 +11,8 @@
           <div class="row">
             <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3">
               <div class="profile-img">
-                <img *ngIf="!showImage && !(user?.user_image)" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
-                <img [src]="userImage" alt="" *ngIf="showImage" onerror="this.src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog'"/>
+                <img *ngIf="!showImage && !(user?.user_image)" class="default-avatar" src="assets/images/avatar-3.png" alt=""/>
+                <img [src]="userImage" alt="" *ngIf="showImage" class="default-avatar" onerror="this.src = 'assets/images/avatar-3.png'">
 <!--                <img [src]="user?.user_image" alt="" *ngIf="!showImage">-->
                 <div class="file btn btn-lg btn-primary">
                   {{ "change_photo" | translate }}
@@ -44,6 +44,7 @@
                                 </span>
                             </div>
                             <input type="text" class="form-control" placeholder='{{ "fname" | translate }}' formControlName="fname" required>
+                            <div *ngIf="isSubmit && control(profileForm, 'fname')?.errors?.required" class="invalid">{{ 'error.fname.empty' | translate }}</div>
                           </div>
                         </div>
                       </div>
@@ -55,7 +56,7 @@
                                   <i class="fa fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" placeholder='{{ "lname" | translate }}' formControlName="lname" required>
+                            <input type="text" class="form-control" placeholder='{{ "lname" | translate }}' formControlName="lname">
                           </div>
                         </div>
                       </div>
@@ -68,6 +69,7 @@
                                 </span>
                             </div>
                             <input type="text" class="form-control" placeholder='{{ "phone" | translate }}' formControlName="phone" required>
+                            <div *ngIf="isSubmit && control(profileForm, 'phone')?.errors?.required" class="invalid">{{ 'error.phone.empty' | translate }}</div>
                           </div>
                         </div>
                       </div>

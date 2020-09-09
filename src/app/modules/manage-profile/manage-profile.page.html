@@ -1,9 +1,5 @@
 <ion-content>
-  <app-chef-layout
-          [uploadImg]="true"
-          [imageURI]="user?.user_image"
-          [displayImage]="userImage"
-          (onHandleUpload)="handleUpload($event)">
+  <app-chef-layout>
     <div class="profile-head clearfix">
       <h5>{{ user?.fname }} {{ user?.lname }}</h5>
       <h6><i class="fa fa-mobile-phone"></i> {{ user?.phone }}</h6>
@@ -29,6 +25,7 @@
                                 </span>
                                         </div>
                                         <input type="text" class="form-control" placeholder='{{ "fname" | translate }}' formControlName="fname" required>
+                                        <div *ngIf="isSubmit && control(profileForm, 'fname')?.errors?.required" class="invalid">{{ 'error.fname.empty' | translate }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +37,7 @@
                                   <i class="fa fa-user"></i>
                                 </span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder='{{ "lname" | translate }}' formControlName="lname" required>
+                                        <input type="text" class="form-control" placeholder='{{ "lname" | translate }}' formControlName="lname">
                                     </div>
                                 </div>
                             </div>
@@ -53,6 +50,7 @@
                                 </span>
                                         </div>
                                         <input type="text" class="form-control" placeholder='{{ "phone" | translate }}' formControlName="phone" required>
+                                        <div *ngIf="isSubmit && control(profileForm, 'phone')?.errors?.required" class="invalid">{{ 'error.phone.empty' | translate }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +62,12 @@
                                   <i class="fa fa-flag"></i>
                                 </span>
                                         </div>
-                                        <select class="form-control" id="county" name="county" formControlName="country">
+                                        <select class="form-control" id="county" name="county" formControlName="country" (change)="changeCountry($event)">
                                             <!--                    <option value="0">{{ 'hire_chef.step7.county' | translate }}</option>-->
                                             <option *ngFor="let ctry of country" value="{{ ctry?.id }}">{{ ctry?.name }}</option>
                                         </select>
+                                        <div *ngIf="isSubmit && (control(profileForm, 'country')?.errors?.required || control(profileForm, 'country')?.errors?.min)"
+                                             class="invalid">{{ 'error.country.empty' | translate }}</div>
                                         <!--                  <input type="text" class="form-control" placeholder="">-->
                                     </div>
                                 </div>
@@ -81,6 +81,7 @@
                                 </span>
                                         </div>
                                         <input type="text" class="form-control" placeholder='{{ "city" | translate }}' formControlName="city">
+                                        <div *ngIf="isSubmit && control(profileForm, 'city')?.errors?.required" class="invalid">{{ 'error.city.empty' | translate }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +93,14 @@
                                   <i class="fa fa-map-marker"></i>
                                 </span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder='{{ "address" | translate }}' formControlName="address">
+                                        <input type="text" class="form-control" placeholder='{{ "address" | translate }}' (input)="updateSearchResults($event)" formControlName="address">
+                                        <div *ngIf="isSubmit && control(profileForm, 'address')?.errors?.required" class="invalid">{{ 'error.address.empty' | translate }}</div>
+                                        <div *ngIf="isSubmit && (user?.longitude == -1 || user?.latitude == -1)" class="invalid">{{ 'error.address.complete' | translate }}</div>
+                                        <ion-list class="places-list" [hidden]="autocompleteItems.length === 0">
+                                            <ion-item *ngFor="let item of autocompleteItems" tappable (click)="selectItem(item)">
+                                                {{ item?.description }}
+                                            </ion-item>
+                                        </ion-list>
                                     </div>
                                 </div>
                             </div>

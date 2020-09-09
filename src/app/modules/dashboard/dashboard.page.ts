@@ -18,7 +18,7 @@ import { LoadingService } from 'src/app/shared/services/loading.service';
 import { UicUserTermsModalComponent } from 'src/app/shared/components/uic-user-terms-modal/uic-user-terms-modal.component';
 import { LanguageService } from 'src/app/shared/services/language.service';
 import {UicShareLinkModalComponent} from '../../shared/components/uic-share-link-modal/uic-share-link-modal.component';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import {of, throwError} from 'rxjs';
 import {UtilService} from '../../shared/services/util.service';
 import {UploadRestService} from '../../shared/services/api/upload.rest.service';
@@ -30,6 +30,7 @@ import {environment} from '../../../environments/environment';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage extends BasePageComponent implements OnInit {
+  isSubmit = false;
   currLng: any;
   user: LoginResponseModel;
   profile: UserAccountRequestModel = {};
@@ -47,9 +48,9 @@ export class DashboardPage extends BasePageComponent implements OnInit {
   public newPass: any = '';
   public confirmPass: any = '';
   profileForm = new FormGroup({
-    fname: new FormControl(undefined),
+    fname: new FormControl(undefined, [Validators.required]),
     lname: new FormControl(undefined),
-    phone: new FormControl(undefined),
+    phone: new FormControl(undefined, [Validators.required]),
     image: new FormControl(''),
     id: new FormControl(undefined),
   });
@@ -70,6 +71,10 @@ export class DashboardPage extends BasePageComponent implements OnInit {
       this.index = this.router.getCurrentNavigation().extras.state.index;
     }
 
+  }
+
+  control(form: FormGroup, name: string): AbstractControl {
+    return form.controls[name];
   }
 
   async ngOnInit() {
@@ -158,33 +163,36 @@ export class DashboardPage extends BasePageComponent implements OnInit {
   }
 
   updateUserProfile() {
-    if(this.imageURI){
-      this.profile['user_image'] = this.imageURI;
-      this.showImage = this.imageURI;
-    }
+    this.isSubmit = true;
+    console.log(this.profileForm)
+    if(this.profileForm.valid) {
+      if (this.imageURI) {
+        this.profile['user_image'] = this.imageURI;
+        this.showImage = this.imageURI;
+      }
 
-    const { fname, lname, phone } = this.profileForm.getRawValue();
+      const {fname, lname, phone} = this.profileForm.getRawValue();
 
-    this.profile.fname = fname;
-    this.profile.lname = lname;
-    this.profile.phone = phone;
+      this.profile.fname = fname;
+      this.profile.lname = lname;
+      this.profile.phone = phone;
 
-    this.loadingService.presentLoading().then(() => {
-      this.userRestService.upDateCustomerDetail(this.profile).pipe(
-        tap((res: ResponseModel<any>) => {
-          if(res.status == 200){
-            this.profile = res.data;
-            this.user = res.data;
-            this.alertService.presentSuccessAlert(res.message);
-          }
-        }),
-        finalize(() => this.loadingService.dismiss())
-      ).subscribe(async () => {
-        await StorageService.setItem(AppConstant.USER_KEY, this.user);
-        this.user = await StorageService.getItem(AppConstant.USER_KEY);
+      this.loadingService.presentLoading().then(() => {
+        this.userRestService.upDateCustomerDetail(this.profile).pipe(
+            tap((res: ResponseModel<any>) => {
+              if (res.status == 200) {
+                this.profile = res.data;
+                this.user = res.data;
+                this.alertService.presentSuccessAlert(res.message);
+              }
+            }),
+            finalize(() => this.loadingService.dismiss())
+        ).subscribe(async () => {
+          await StorageService.setItem(AppConstant.USER_KEY, this.user);
+          this.user = await StorageService.getItem(AppConstant.USER_KEY);
+        });
       });
-    });
-
+    }
   }
 
   changePassword() {
